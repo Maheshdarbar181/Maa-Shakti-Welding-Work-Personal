@@ -1121,9 +1121,129 @@ function readMswSheetOrders() {
   const orders = [];
   sheets.forEach((sh, idx) => {
     const sName = sh.getName();
-    if (sName.indexOf('કોપિ') !== -1) return;
+    if (sName.indexOf('કોપિ') !== -1 || sName.toLowerCase().indexOf('copy') !== -1) return;
+    const lastRow = Math.max(80, sh.getLastRow());
     const lastCol = Math.max(14, sh.getLastColumn());
-    const v = sh.getRange(1, 1, 44, lastCol).getValues();
+    const v = sh.getRange(1, 1, lastRow, lastCol).getValues();
+
+    const isNewLayout = String((v[2] && v[2][1]) || '').indexOf('ઓર્ડર નામ') !== -1;
+
+    if (isNewLayout) {
+      const orderName = String((v[2] && v[2][2]) || '').trim();
+      if (!orderName) return;
+      const orderNo = Number(v[3] && v[3][2]) || (idx + 1);
+
+      // Partners from F3:F4
+      const sheetPartners = [];
+      for (let pr = 2; pr <= 3; pr++) {
+        const pName = String((v[pr] && v[pr][5]) || '').trim();
+        if (pName && sheetPartners.indexOf(pName) === -1) sheetPartners.push(pName);
+      }
+      if (sheetPartners.length === 0) sheetPartners.push('મહેશ');
+
+      // Customer Advances (B8:C14 -> r=7..13)
+      const advances = [];
+      for (let r = 7; r <= 13; r++) {
+        const dt = fmtDate(v[r] && v[r][1]);
+        const amt = Number(v[r] && v[r][2]) || 0;
+        if (amt > 0 || dt) advances.push({ date: dt, amount: amt });
+      }
+
+      // Labor Items (D8:E14 -> r=7..13)
+      const laborItems = [];
+      for (let r = 7; r <= 13; r++) {
+        const desc = String((v[r] && v[r][3]) || '').trim();
+        const amt = Number(v[r] && v[r][4]) || 0;
+        if (desc || amt > 0) laborItems.push({ desc, amount: amt });
+      }
+
+      // Clean Material Expenses (G8:I17 -> r=7..16)
+      const expenses = [];
+      for (let r = 7; r <= 16; r++) {
+        const who = String((v[r] && v[r][6]) || '').trim();
+        const amount = Number(v[r] && v[r][7]) || 0;
+        const desc = String((v[r] && v[r][8]) || '').trim();
+        if (amount > 0 || desc) expenses.push({ who, amount, desc });
+      }
+
+      // Workers & Attendance (Row 50 names C50:G50 -> r=49, c=2..6; Row 51 rate -> r=50; Rows 53..76 att -> r=52..75)
+      const dynWorkers = [];
+      let sureshAtt = [];
+      let dipakAtt = [];
+      for (let c = 2; c <= 6; c++) {
+        const wName = String((v[49] && v[49][c]) || '').trim();
+        if (!wName) continue;
+        const wAtt = [];
+        for (let r = 52; r <= 75; r++) {
+          const dt = fmtDate(v[r] && v[r][1]);
+          const dVal = v[r] && v[r][c];
+          if (!dt) continue;
+          if (dVal !== '' && dVal !== null && dVal !== undefined) {
+            wAtt.push({ date: dt, days: Number(dVal) || 0, rowIdx: r - 52 });
+          }
+        }
+        const rateCell = String((v[50] && v[50][c]) || '').trim();
+        const numRateCell = Number(rateCell);
+        const isLumpsumCell = /ઉચ્ચક|lumpsum/i.test(rateCell);
+        const mode = isLumpsumCell ? 'lumpsum' : 'daily';
+        const rate = (!isLumpsumCell && !isNaN(numRateCell) && numRateCell > 0) ? numRateCell : (isLumpsumCell ? 0 : 350);
+        if (wName === 'સુરેશ') sureshAtt = wAtt;
+        if (wName === 'દિપક') dipakAtt = wAtt;
+        dynWorkers.push({ name: wName, mode, rate, lumpsumFee: 0, att: wAtt });
+      }
+      if (dynWorkers.length === 0) {
+        dynWorkers.push({ name: 'સુરેશ', mode: 'daily', rate: 350, lumpsumFee: 0, att: [] });
+      }
+
+      // Unified Upad (B21:I32 -> header r=20, rows r=21..31)
+      const upadCols = [];
+      for (let uc = 2; uc <= 8; uc++) {
+        const uRaw = String((v[20] && v[20][uc]) || '').trim();
+        if (uRaw && !/^ભાગીદાર [૧૨]$|^કારીગર [૧-૫]$/.test(uRaw)) {
+          upadCols.push({ col: uc, name: uRaw });
+        }
+      }
+      const upads = [];
+      for (let r = 21; r <= 31; r++) {
+        const dt = fmtDate(v[r] && v[r][1]);
+        const bp = {};
+        let anyAmt = false;
+        upadCols.forEach(uc => {
+          const val = Number(v[r] && v[r][uc.col]) || 0;
+          bp[uc.name] = val;
+          if (val > 0) anyAmt = true;
+        });
+        if (dt || anyAmt) {
+          upads.push({
+            date: dt,
+            madhusinh: bp['માધુસિંહ'] || 0,
+            mahesh: bp['મહેશ'] || 0,
+            suresh: bp['સુરેશ'] || 0,
+            byPerson: bp
+          });
+        }
+      }
+
+      orders.push({
+        id: 'msw_' + orderNo + '_' + sName,
+        orderNo,
+        name: orderName,
+        partners: sheetPartners,
+        workers: dynWorkers,
+        laborItems,
+        advances,
+        upads,
+        expenses,
+        sureshAtt,
+        dipakAtt,
+        dipakFee: 0,
+        extraMahesh: 0,
+        extraMadhusinh: 0
+      });
+      return;
+    }
+
+    // Old Layout fallback (with bug fixes)
     const rawTitle = v[1].slice(1, 8).map(x => String(x || '').trim()).filter(Boolean)[0] || '';
     const orderName = rawTitle.replace('ઓર્ડર નામ :', '').replace('ઓર્ડર નામ:', '').trim();
     if (!orderName) return;
@@ -1169,15 +1289,37 @@ function readMswSheetOrders() {
       }
     }
 
+    // Extra workers upad (Rows 47..57 -> header r=46, rows r=47..56)
+    const extraUpadCols = [];
+    for (let uc = 2; uc <= 5; uc++) {
+      const uRaw = String((v[46] && v[46][uc]) || '').trim();
+      if (uRaw) extraUpadCols.push({ col: uc, name: uRaw });
+    }
+    if (extraUpadCols.length > 0) {
+      for (let r = 47; r <= 56 && r < v.length; r++) {
+        const dt = fmtDate(v[r][1]);
+        const bp = {};
+        let anyAmt = false;
+        extraUpadCols.forEach(uc => {
+          const val = Number(v[r][uc.col]) || 0;
+          bp[uc.name] = val;
+          if (val > 0) anyAmt = true;
+        });
+        if (dt || anyAmt) {
+          upads.push({ date: dt, madhusinh: 0, mahesh: 0, suresh: 0, byPerson: bp });
+        }
+      }
+    }
+
+    // Material Expenses only (G22:I27 -> r=21..26 so H28:H32 worker wages are not double-counted)
     const expenses = [];
-    for (let r = 21; r <= 29; r++) {
+    for (let r = 21; r <= 26; r++) {
       const who = String(v[r][6] || '').trim();
       const amount = Number(v[r][7]) || 0;
       const desc = String(v[r][8] || '').trim();
       if (amount > 0 || desc) expenses.push({ who, amount, desc });
     }
 
-    // Read worker wage rows (rows 31..32 in cols H, I) for lumpsum fee detection
     const workerFeeHints = [];
     for (let r = 30; r <= 31; r++) {
       const fAmt = Number(v[r] && v[r][7]) || 0;
@@ -1185,7 +1327,6 @@ function readMswSheetOrders() {
       if (fAmt > 0 || fDesc) workerFeeHints.push({ amount: fAmt, desc: fDesc });
     }
 
-    // Dynamically scan all worker columns from L (index 11) onwards
     const dynWorkers = [];
     let sureshAtt = [];
     let dipakAtt = [];
@@ -1234,13 +1375,22 @@ function readMswSheetOrders() {
       dynWorkers.push({ name: 'સુરેશ', mode: 'daily', rate: 350, lumpsumFee: 0, att: [] });
     }
 
-    // Dynamically read partners from Row 39 (F39:H39)
     const workerNameSet = new Set(dynWorkers.map(w => w.name));
     const sheetPartners = [];
-    for (let pc = 5; pc <= 7; pc++) {
-      const pName = String((v[38] && v[38][pc]) || '').trim();
+    for (let pr = 9; pr <= 10; pr++) {
+      let pName = String((v[pr] && v[pr][7]) || '').trim();
+      if (pName === 'મહેશભાઈ') pName = 'મહેશ';
       if (pName && !workerNameSet.has(pName) && sheetPartners.indexOf(pName) === -1) {
         sheetPartners.push(pName);
+      }
+    }
+    if (sheetPartners.length === 0) {
+      for (let pc = 5; pc <= 7; pc++) {
+        let pName = String((v[38] && v[38][pc]) || '').trim();
+        if (pName === 'મહેશભાઈ') pName = 'મહેશ';
+        if (pName && !workerNameSet.has(pName) && sheetPartners.indexOf(pName) === -1) {
+          sheetPartners.push(pName);
+        }
       }
     }
     if (sheetPartners.length === 0) sheetPartners.push('મહેશ');
