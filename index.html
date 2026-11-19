@@ -254,7 +254,7 @@
             🌙 Dark Mode
           </button>
           <button id="btn-menu-sheet-sync" type="button" class="px-3 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 border border-emerald-500 text-white text-xs font-bold transition whitespace-nowrap">
-            📊 M S W__2027 Sheet સિંક
+            🔄 2-Way Sheet સિંક (App ↔ Sheet)
           </button>
         </div>
       </div>
@@ -411,11 +411,20 @@
           </button>
         </div>
 
+        <div class="flex items-center gap-2 pt-1">
+          <label class="inline-flex items-center gap-2 text-xs font-semibold text-slate-700 cursor-pointer select-none">
+            <input id="chk-auto-twoway" type="checkbox" class="w-4 h-4 accent-emerald-600 rounded" />
+            <span>🔄 ઓટો 2-Way સિંક ચાલુ રાખો (એપમાં ફેરફાર કરતા જ Google Sheet M S W__2027 માં પણ સેવ થાય)</span>
+          </label>
+        </div>
+
         <div class="flex flex-wrap items-center gap-2 pt-1">
-          <button id="btn-drive-sync-now" type="button" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-xl transition" data-i18n="driveSyncNow">
+          <button id="btn-twoway-sync" type="button" class="px-3.5 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs rounded-xl shadow-sm transition">🔄 2-Way સિંક (App ↔ Sheet)</button>
+          <button id="btn-sheet-sync" type="button" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-sm transition">📊 Sheet માંથી લાવો (Sheet → App)</button>
+          <button id="btn-sheet-push" type="button" class="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-sm transition">📤 Sheet માં મોકલો (App → Sheet)</button>
+          <button id="btn-drive-sync-now" type="button" class="px-3.5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-xs rounded-xl transition" data-i18n="driveSyncNow">
             અત્યારે Drive માં સેવ કરો
           </button>
-          <button id="btn-sheet-sync" type="button" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-sm transition">📊 Google Sheet (M S W__2027) માંથી લાવો</button>
           <button id="btn-drive-restore" type="button" class="px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs rounded-xl transition" data-i18n="driveRestore">
             Drive માંથી ડેટા પાછો લાવો
           </button>
@@ -964,16 +973,24 @@
       if (lastEl && lastSync) lastEl.textContent = `${t('lastDriveBackup')}: ${lastSync}`;
     }
 
+    const AUTO_TWOWAY_KEY = 'maa_shakti_auto_twoway_v1';
+    function isAutoTwoWayEnabled() {
+      try {
+        const v = localStorage.getItem(AUTO_TWOWAY_KEY);
+        return v === null ? true : v === 'true';
+      } catch (e) { return true; }
+    }
+
     let _driveSyncTimer = null;
     function scheduleDriveSync() {
       const url = getGasUrl();
       if (!url) return;
       updateDriveSyncUI('syncing', true);
       clearTimeout(_driveSyncTimer);
-      _driveSyncTimer = setTimeout(() => { syncToGoogleDrive(false); }, 1200);
+      _driveSyncTimer = setTimeout(() => { syncToGoogleDrive(false, isAutoTwoWayEnabled()); }, 1400);
     }
 
-    async function syncToGoogleDrive(showAlertToast) {
+    async function syncToGoogleDrive(showAlertToast, syncSheet = isAutoTwoWayEnabled()) {
       const url = getGasUrl();
       if (!url) {
         if (showAlertToast) showToast(t('driveNeedUrl'));
@@ -981,7 +998,8 @@
       }
       updateDriveSyncUI('syncing', true);
       const payload = JSON.stringify({
-        action: 'save',
+        action: syncSheet && state.orders.length > 0 ? 'saveSheet' : 'save',
+        syncToSheet: Boolean(syncSheet && state.orders.length > 0),
         orders: state.orders,
         contact: state.contact,
         updatedAt: new Date().toISOString()
@@ -1103,6 +1121,59 @@
       }
     }
 
+    async function syncToGoogleSheet(silent = false) {
+      const url = getGasUrl();
+      if (!url) { if (!silent) showToast(t('driveNeedUrl')); return; }
+      if (!state.orders || state.orders.length === 0) {
+        if (!silent) showToast('એપમાં કોઈ ઓર્ડર નથી — પહેલા Sheet માંથી લાવો અથવા નવો ઓર્ડર ઉમેરો.');
+        return;
+      }
+      updateDriveSyncUI(t('driveBadgeSyncing'), true);
+      const payload = JSON.stringify({
+        action: 'saveSheet',
+        syncToSheet: true,
+        orders: state.orders,
+        contact: state.contact,
+        updatedAt: new Date().toISOString()
+      });
+      try {
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: payload
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const resJson = await res.json();
+        if (resJson && resJson.status === 'ok') {
+          if (Array.isArray(resJson.orders)) {
+            state.orders = normalizeOrdersDates(resJson.orders);
+            if (!state.orders.some(o => o.id === state.selectedOrderId)) {
+              state.selectedOrderId = state.orders[0]?.id || null;
+            }
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state.orders)); } catch (e) {}
+          }
+          const nowStr = `${todayDDMMYYYY()} ${new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}`;
+          try { localStorage.setItem(GAS_LAST_SYNC_KEY, nowStr); } catch (e) {}
+          updateDriveSyncUI(t('driveConnectedBadge'), true);
+          renderDashboard(); renderOrdersView(); renderAttendanceView();
+          if (!silent) showToast(`Google Sheet (M S W__2027) માં ${resJson.updatedCount || state.orders.length} ઓર્ડર અપડેટ થયા! ✓`);
+        } else {
+          updateDriveSyncUI(t('driveErr'), false);
+          if (!silent) showToast(resJson?.message || 'Sheet માં સેવ કરવામાં ભૂલ આવી — નવો Apps Script કોડ Deploy કરો.');
+        }
+      } catch (err) {
+        updateDriveSyncUI('કનેક્શન / CORS એરર', false);
+        if (!silent) showToast('Sheet માં મોકલી શકાયું નહીં — નવો Apps Script કોડ Deploy કરેલો છે કે નહીં તે ચેક કરો.');
+      }
+    }
+
+    async function twoWaySync(silent = false) {
+      if (!state.orders || state.orders.length === 0) {
+        return syncFromGoogleSheet(silent);
+      }
+      return syncToGoogleSheet(silent);
+    }
+
     function openGasGuideModal() {
       const gasCode = `const SHEET_ID = '1u5CzjmkSPb6ArzbMvqZsPhHTmO6gXbM1AgUQ5XDvPOQ';
 const BACKUP_FILE_NAME = 'MSW_Personal_Auto_Backup.json';
@@ -1121,7 +1192,8 @@ function readMswSheetOrders() {
   const orders = [];
   sheets.forEach((sh, idx) => {
     const sName = sh.getName();
-    if (sName.indexOf('કોપિ') !== -1 || sName.toLowerCase().indexOf('copy') !== -1) return;
+    const sLower = sName.toLowerCase();
+    if (sName.indexOf('કોપિ') !== -1 || sLower.indexOf('copy') !== -1 || sName.indexOf('ટેમ્પલેટ') !== -1 || sLower.indexOf('template') !== -1) return;
     const lastRow = Math.max(80, sh.getLastRow());
     const lastCol = Math.max(14, sh.getLastColumn());
     const v = sh.getRange(1, 1, lastRow, lastCol).getValues();
@@ -1132,14 +1204,15 @@ function readMswSheetOrders() {
       const orderName = String((v[2] && v[2][2]) || '').trim();
       if (!orderName) return;
       const orderNo = Number(v[3] && v[3][2]) || (idx + 1);
+      const customerPhone = String((v[3] && v[3][3]) || '').replace(/^મો\\s*:?\\s*/i, '').trim();
 
-      // Partners from F3:F4
+      // Partners from F3:F4 (F3 = Proprietor)
+      const proprietor = String((v[2] && v[2][5]) || '').trim();
       const sheetPartners = [];
       for (let pr = 2; pr <= 3; pr++) {
         const pName = String((v[pr] && v[pr][5]) || '').trim();
         if (pName && sheetPartners.indexOf(pName) === -1) sheetPartners.push(pName);
       }
-      if (sheetPartners.length === 0) sheetPartners.push('મહેશ');
 
       // Customer Advances (B8:C14 -> r=7..13)
       const advances = [];
@@ -1191,9 +1264,6 @@ function readMswSheetOrders() {
         if (wName === 'દિપક') dipakAtt = wAtt;
         dynWorkers.push({ name: wName, mode, rate, lumpsumFee: 0, att: wAtt });
       }
-      if (dynWorkers.length === 0) {
-        dynWorkers.push({ name: 'સુરેશ', mode: 'daily', rate: 350, lumpsumFee: 0, att: [] });
-      }
 
       // Unified Upad (B21:I32 -> header r=20, rows r=21..31)
       const upadCols = [];
@@ -1226,8 +1296,11 @@ function readMswSheetOrders() {
 
       orders.push({
         id: 'msw_' + orderNo + '_' + sName,
+        sheetName: sName,
         orderNo,
         name: orderName,
+        customerPhone,
+        proprietor,
         partners: sheetPartners,
         workers: dynWorkers,
         laborItems,
@@ -1371,9 +1444,7 @@ function readMswSheetOrders() {
       dynWorkers.push({ name: wName, mode, rate, lumpsumFee, att: wAtt });
     }
 
-    if (dynWorkers.length === 0) {
-      dynWorkers.push({ name: 'સુરેશ', mode: 'daily', rate: 350, lumpsumFee: 0, att: [] });
-    }
+    // No preloaded workers
 
     const workerNameSet = new Set(dynWorkers.map(w => w.name));
     const sheetPartners = [];
@@ -1393,12 +1464,12 @@ function readMswSheetOrders() {
         }
       }
     }
-    if (sheetPartners.length === 0) sheetPartners.push('મહેશ');
-
     orders.push({
       id: 'msw_' + orderNo + '_' + sName,
+      sheetName: sName,
       orderNo,
       name: orderName,
+      proprietor: sheetPartners[0] || '', 
       partners: sheetPartners,
       workers: dynWorkers,
       laborItems,
@@ -1436,6 +1507,142 @@ function doGet(e) {
   }
 }
 
+function writeMswSheetOrders(orders) {
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  const sheets = ss.getSheets();
+  const templateSheet = sheets.find(s => s.getName().indexOf('ટેમ્પલેટ') !== -1 || s.getName().toLowerCase().indexOf('template') !== -1);
+  let updatedCount = 0;
+
+  (orders || []).forEach((o, idx) => {
+    const oName = String(o.name || '').trim();
+    if (!oName) return;
+    let sh = null;
+    if (o.sheetName) sh = ss.getSheetByName(o.sheetName);
+    if (!sh) {
+      sh = sheets.find(s => {
+        const sn = s.getName();
+        if (sn.indexOf('કોપિ') !== -1 || sn.toLowerCase().indexOf('copy') !== -1 || sn.indexOf('ટેમ્પલેટ') !== -1 || sn.toLowerCase().indexOf('template') !== -1) return false;
+        const c3 = String(s.getRange('C3').getValue() || '').trim();
+        const c4 = Number(s.getRange('C4').getValue()) || 0;
+        return (c3 && c3 === oName) || (o.orderNo && c4 === Number(o.orderNo));
+      });
+    }
+    if (!sh && templateSheet) {
+      let baseName = oName.replace(/[\\\\/?*:]/g, '_').split('[').join('_').split(']').join('_').slice(0, 90) || ('Order_' + (o.orderNo || (idx + 1)));
+      let targetName = baseName;
+      let suffix = 2;
+      while (ss.getSheetByName(targetName)) {
+        targetName = baseName.slice(0, 85) + '_' + suffix++;
+      }
+      sh = templateSheet.copyTo(ss).setName(targetName);
+      o.sheetName = targetName;
+    }
+    if (!sh) return;
+
+    const isNewLayout = String(sh.getRange('B3').getValue() || '').indexOf('ઓર્ડર નામ') !== -1;
+    if (!isNewLayout) return;
+
+    const partners = Array.isArray(o.partners) ? o.partners : [];
+    const workers = Array.isArray(o.workers) ? o.workers : [];
+
+    // Header & Partners (F3 = Proprietor, F4 = Partner 2)
+    sh.getRange('C3').setValue(oName);
+    sh.getRange('C4').setValue(Number(o.orderNo) || (idx + 1));
+    sh.getRange('D4').setValue(o.customerPhone ? ('મો : ' + o.customerPhone) : 'મો : ');
+    sh.getRange('F3').setValue(partners[0] || '');
+    sh.getRange('F4').setValue(partners[1] || '');
+
+    // Customer Advances (B8:C14 -> 7 rows)
+    const advRows = [];
+    const advs = Array.isArray(o.advances) ? o.advances : [];
+    for (let r = 0; r < 7; r++) {
+      const a = advs[r];
+      advRows.push([a ? (a.date || '') : '', a && a.amount !== '' && a.amount !== undefined ? (Number(a.amount) || 0) : '']);
+    }
+    sh.getRange(8, 2, 7, 2).setValues(advRows);
+
+    // Labor Items (D8:E14 -> 7 rows)
+    const labRows = [];
+    const labs = Array.isArray(o.laborItems) ? o.laborItems : [];
+    for (let r = 0; r < 7; r++) {
+      const l = labs[r];
+      labRows.push([l ? (l.desc || '') : '', l && l.amount !== '' && l.amount !== undefined ? (Number(l.amount) || 0) : '']);
+    }
+    sh.getRange(8, 4, 7, 2).setValues(labRows);
+
+    // Material Expenses (G8:I17 -> 10 rows)
+    const expRows = [];
+    const exps = Array.isArray(o.expenses) ? o.expenses : [];
+    for (let r = 0; r < 10; r++) {
+      const x = exps[r];
+      expRows.push([
+        x ? (x.who || '') : '',
+        x && x.amount !== '' && x.amount !== undefined ? (Number(x.amount) || 0) : '',
+        x ? (x.desc || '') : ''
+      ]);
+    }
+    sh.getRange(8, 7, 10, 3).setValues(expRows);
+
+    // Upad rows (B22:I32 -> 11 rows: Date, P1, P2, W1..W5)
+    const upadRows = [];
+    const upads = Array.isArray(o.upads) ? o.upads : [];
+    const colNames = [partners[0] || '', partners[1] || '', (workers[0] && workers[0].name) || '', (workers[1] && workers[1].name) || '', (workers[2] && workers[2].name) || '', (workers[3] && workers[3].name) || '', (workers[4] && workers[4].name) || ''];
+    for (let r = 0; r < 11; r++) {
+      const u = upads[r];
+      const rowArr = [u ? (u.date || '') : ''];
+      for (let c = 0; c < 7; c++) {
+        const person = colNames[c];
+        let val = '';
+        if (u && person) {
+          if (u.byPerson && u.byPerson[person] !== undefined && u.byPerson[person] !== '') val = Number(u.byPerson[person]) || 0;
+          else if (person === 'માધુસિંહ' && u.madhusinh) val = Number(u.madhusinh) || 0;
+          else if (person === 'મહેશ' && u.mahesh) val = Number(u.mahesh) || 0;
+          else if (person === 'સુરેશ' && u.suresh) val = Number(u.suresh) || 0;
+        }
+        rowArr.push(val);
+      }
+      upadRows.push(rowArr);
+    }
+    sh.getRange(22, 2, 11, 8).setValues(upadRows);
+
+    // Workers & Rates (C50:G51 -> 5 cols)
+    const wNames = [];
+    const wRates = [];
+    for (let c = 0; c < 5; c++) {
+      const w = workers[c];
+      wNames.push(w ? (w.name || '') : '');
+      wRates.push(w ? (w.mode === 'lumpsum' ? 'ઉચ્ચક' : (Number(w.rate) || 0)) : '');
+    }
+    sh.getRange(50, 3, 1, 5).setValues([wNames]);
+    sh.getRange(51, 3, 1, 5).setValues([wRates]);
+
+    // Attendance rows (B53:G76 -> 24 rows)
+    const attRowMap = new Map();
+    workers.slice(0, 5).forEach((w, wIdx) => {
+      const attList = (w.name === 'સુરેશ' && Array.isArray(o.sureshAtt) && o.sureshAtt.length) ? o.sureshAtt
+        : (w.name === 'દિપક' && Array.isArray(o.dipakAtt) && o.dipakAtt.length) ? o.dipakAtt
+        : (Array.isArray(w.att) ? w.att : []);
+      attList.forEach(item => {
+        const key = (item.rowIdx !== undefined && item.rowIdx !== null) ? ('r_' + item.rowIdx) : ('d_' + (item.date || ''));
+        if (!attRowMap.has(key)) attRowMap.set(key, { date: item.date || '', days: ['', '', '', '', ''] });
+        const rec = attRowMap.get(key);
+        if (!rec.date && item.date) rec.date = item.date;
+        rec.days[wIdx] = (item.days !== '' && item.days !== undefined && item.days !== null) ? (Number(item.days) || 0) : '';
+      });
+    });
+    const attListMerged = Array.from(attRowMap.values());
+    const attGrid = [];
+    for (let r = 0; r < 24; r++) {
+      const rec = attListMerged[r];
+      attGrid.push(rec ? [rec.date || '', ...rec.days] : ['', '', '', '', '', '']);
+    }
+    sh.getRange(53, 2, 24, 6).setValues(attGrid);
+    updatedCount++;
+  });
+  SpreadsheetApp.flush();
+  return updatedCount;
+}
+
 function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
@@ -1450,7 +1657,13 @@ function doPost(e) {
     } else {
       DriveApp.createFile(BACKUP_FILE_NAME, jsonStr, MimeType.PLAIN_TEXT);
     }
-    return ContentService.createTextOutput(JSON.stringify({ status: 'ok' }))
+    let updatedCount = 0;
+    let freshOrders = null;
+    if (data.action === 'saveSheet' || data.syncToSheet) {
+      updatedCount = writeMswSheetOrders(data.orders || []);
+      freshOrders = readMswSheetOrders();
+    }
+    return ContentService.createTextOutput(JSON.stringify({ status: 'ok', updatedCount, orders: freshOrders }))
       .setMimeType(ContentService.MimeType.JSON);
   } catch (err) {
     return ContentService.createTextOutput(JSON.stringify({ status: 'error', message: err.toString() }))
@@ -2337,7 +2550,7 @@ table{border-collapse:collapse}
       const contactProps = getContactProprietorNames();
       const partners = (Array.isArray(o.partners) && o.partners.length > 0)
         ? o.partners
-        : (contactProps.length > 0 ? contactProps : ['પ્રોપરાઇટર']);
+        : (contactProps.length > 0 ? contactProps : []);
       let workers = [];
       if (Array.isArray(o.workers)) {
         workers = o.workers;
@@ -2459,11 +2672,10 @@ table{border-collapse:collapse}
       const maheshStat = partnerStats.find(p => p.name === 'મહેશ') || { upad: 0, spent: 0, extra: 0, diff: 0, final: 0 };
       const madhuStat = partnerStats.find(p => p.name === 'માધુસિંહ') || { upad: 0, spent: 0, extra: 0, diff: 0, final: 0 };
 
-      // Upad columns: all partners + daily workers (+ any lumpsum worker with upad/spent/extra)
-      const activeWorkers = workerStats.filter(w => w.mode === 'daily' || w.upad > 0 || w.spent > 0 || w.extra > 0);
+      // F3/F4 partners + all workers in attendance sheet appear in Final Settlement
       const settlementCols = [
-        ...partnerStats.map(p => ({ name: p.name, role: 'partner', share: p.share, upad: p.upad, spentPlusExtra: p.spent + p.extra, final: p.final })),
-        ...activeWorkers.map(w => ({ name: w.name, role: 'worker', share: w.wage, upad: w.upad, spentPlusExtra: w.spent + w.extra, final: w.final }))
+        ...partnerStats.map((p, idx) => ({ name: p.name, role: idx === 0 ? 'proprietor' : 'partner', share: p.share, upad: p.upad, spentPlusExtra: p.spent + p.extra, final: p.final })),
+        ...workerStats.map(w => ({ name: w.name, role: 'worker', share: w.wage, upad: w.upad, spentPlusExtra: w.spent + w.extra, final: w.final }))
       ];
 
       return {
@@ -2983,7 +3195,7 @@ table{border-collapse:collapse}
             className: 'px-4 py-2 text-sm font-semibold bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl',
             onClick: () => {
               const cleanP = draftPartners.map(p => p.trim()).filter(Boolean);
-              if (cleanP.length === 0) { const cp = getContactProprietorNames(); cleanP.push(...(cp.length ? cp : ['Proprietor'])); }
+              if (cleanP.length === 0) { const cp = getContactProprietorNames(); if (cp.length) cleanP.push(...cp); }
               const cleanW = draftWorkers.map(w => ({
                 name: (w.name || '').trim(),
                 mode: w.mode || 'daily',
@@ -4182,14 +4394,26 @@ table{border-collapse:collapse}
           syncToGoogleDrive(true);
         }
       });
-      document.getElementById('btn-drive-sync-now').addEventListener('click', () => syncToGoogleDrive(true));
+      const chkAutoTwoWay = document.getElementById('chk-auto-twoway');
+      if (chkAutoTwoWay) {
+        chkAutoTwoWay.checked = isAutoTwoWayEnabled();
+        chkAutoTwoWay.addEventListener('change', () => {
+          try { localStorage.setItem(AUTO_TWOWAY_KEY, chkAutoTwoWay.checked ? 'true' : 'false'); } catch (e) {}
+          showToast(chkAutoTwoWay.checked ? 'ઓટો 2-Way સિંક ચાલુ થયું ✓' : 'ઓટો 2-Way સિંક બંધ થયું');
+        });
+      }
+      document.getElementById('btn-drive-sync-now').addEventListener('click', () => syncToGoogleDrive(true, false));
       document.getElementById('btn-drive-restore').addEventListener('click', () => restoreFromGoogleDrive(false));
       document.getElementById('btn-sheet-sync').addEventListener('click', () => syncFromGoogleSheet(false));
+      const btnSheetPush = document.getElementById('btn-sheet-push');
+      if (btnSheetPush) btnSheetPush.addEventListener('click', () => syncToGoogleSheet(false));
+      const btnTwoWay = document.getElementById('btn-twoway-sync');
+      if (btnTwoWay) btnTwoWay.addEventListener('click', () => twoWaySync(false));
       const menuSheetBtn = document.getElementById('btn-menu-sheet-sync');
       if (menuSheetBtn) {
         menuSheetBtn.addEventListener('click', () => {
           if (menuPanel) menuPanel.classList.add('hidden');
-          syncFromGoogleSheet(false);
+          twoWaySync(false);
         });
       }
       document.getElementById('btn-show-gas-guide').addEventListener('click', openGasGuideModal);
