@@ -3866,7 +3866,10 @@ table{border-collapse:collapse}
       applyStaticTranslations();
       renderContactDisplay();
       const gasInput = document.getElementById('input-gas-url');
-      if (gasInput) gasInput.value = getGasUrl();
+      const curGasUrl = getGasUrl();
+      if (gasInput) gasInput.value = curGasUrl;
+      const initTst = document.getElementById('btn-test-gas-url');
+      if (initTst && curGasUrl) initTst.href = curGasUrl + (curGasUrl.includes('?') ? '&' : '?') + 'action=loadSheet';
       updateDriveSyncUI();
 
       document.getElementById('btn-header-drive-status').addEventListener('click', () => {
@@ -3883,7 +3886,12 @@ table{border-collapse:collapse}
           updateDriveSyncUI();
           showToast(t('driveUrlRemoved'));
         } else {
-          syncToGoogleDrive(true);
+          const isOnlySample = state.orders.length === 0 || (state.orders.length <= INITIAL_ORDERS.length && state.orders.every(o => String(o.id || '').startsWith('ord_')));
+          if (isOnlySample) {
+            syncFromGoogleSheet(false);
+          } else {
+            syncToGoogleDrive(true);
+          }
         }
       });
       document.getElementById('btn-drive-sync-now').addEventListener('click', () => {
