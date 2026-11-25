@@ -14,58 +14,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Gujarati:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style id="offline-tailwind-fallback">
-    *,*::before,*::after{box-sizing:border-box}
-    body{margin:0;line-height:1.45}
-    .hidden{display:none}
-    .block{display:block}.inline-block{display:inline-block}.inline-flex{display:inline-flex}
-    .flex{display:flex}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}
-    .items-start{align-items:flex-start}.items-center{align-items:center}.items-end{align-items:flex-end}
-    .justify-between{justify-content:space-between}.justify-center{justify-content:center}.justify-end{justify-content:flex-end}
-    .grid{display:grid}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
-    .grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
-    .gap-1{gap:4px}.gap-1\.5{gap:6px}.gap-2{gap:8px}.gap-3{gap:12px}.gap-4{gap:16px}.gap-5{gap:20px}
-    .gap-x-4{column-gap:16px}.gap-y-1{row-gap:4px}
-    .space-y-1>*+*{margin-top:4px}.space-y-1\.5>*+*{margin-top:6px}.space-y-2>*+*{margin-top:8px}.space-y-2\.5>*+*{margin-top:10px}
-    .space-y-3>*+*{margin-top:12px}.space-y-3\.5>*+*{margin-top:14px}.space-y-4>*+*{margin-top:16px}.space-y-5>*+*{margin-top:20px}
-    .p-1{padding:4px}.p-1\.5{padding:6px}.p-2{padding:8px}.p-2\.5{padding:10px}.p-3{padding:12px}.p-3\.5{padding:14px}.p-4{padding:16px}.p-5{padding:20px}.p-6{padding:24px}
-    .px-1\.5{padding-left:6px;padding-right:6px}.px-2{padding-left:8px;padding-right:8px}.px-2\.5{padding-left:10px;padding-right:10px}
-    .px-3{padding-left:12px;padding-right:12px}.px-3\.5{padding-left:14px;padding-right:14px}.px-4{padding-left:16px;padding-right:16px}
-    .py-0\.5{padding-top:2px;padding-bottom:2px}.py-1{padding-top:4px;padding-bottom:4px}.py-1\.5{padding-top:6px;padding-bottom:6px}
-    .py-2{padding-top:8px;padding-bottom:8px}.py-2\.5{padding-top:10px;padding-bottom:10px}.py-3{padding-top:12px;padding-bottom:12px}.py-5{padding-top:20px;padding-bottom:20px}
-    .pt-2{padding-top:8px}.mt-0\.5{margin-top:2px}.mt-1{margin-top:4px}.mt-2{margin-top:8px}.mt-2\.5{margin-top:10px}.mb-1{margin-bottom:4px}.ml-1{margin-left:4px}.mx-auto{margin-left:auto;margin-right:auto}
-    .w-full{width:100%}.w-12{width:48px}.h-12{height:48px}.w-14{width:56px}.h-14{height:56px}.w-20{width:80px}.w-24{width:96px}
-    .min-h-screen{min-height:100vh}.min-w-0{min-width:0}.max-w-full{max-width:100%}.max-w-2xl{max-width:672px}.max-w-4xl{max-width:896px}.max-w-7xl{max-width:1280px}
-    .overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.max-h-\[65vh\]{max-height:65vh}
-    .sticky{position:sticky}.top-0{top:0}.fixed{position:fixed}.inset-0{inset:0}.bottom-5{bottom:20px}.right-5{right:20px}.z-30{z-index:30}.z-50{z-index:50}
-    .rounded{border-radius:4px}.rounded-lg{border-radius:8px}.rounded-xl{border-radius:12px}.rounded-2xl{border-radius:16px}
-    .border{border:1px solid #cbd5e1}.border-2{border:2px solid #cbd5e1}.border-t{border-top:1px solid #cbd5e1}.border-collapse{border-collapse:collapse}
-    .divide-y>*+*{border-top:1px solid #f1f5f9}
-    .bg-white{background-color:#fff}.bg-slate-50{background-color:#f8fafc}.bg-slate-100{background-color:#f1f5f9}.bg-slate-200{background-color:#e2e8f0}
-    .bg-slate-800{background-color:#1e293b}.bg-slate-900{background-color:#0f172a}.bg-slate-900\/60{background-color:rgba(15,23,42,.6)}
-    .bg-amber-50{background-color:#fffbeb}.bg-amber-100{background-color:#fef3c7}.bg-amber-500{background-color:#f59e0b}
-    .bg-emerald-50{background-color:#ecfdf5}.bg-emerald-100{background-color:#d1fae5}.bg-emerald-600{background-color:#059669}.bg-emerald-700{background-color:#047857}
-    .bg-rose-50{background-color:#fff1f2}.bg-rose-100{background-color:#ffe4e6}.bg-rose-600{background-color:#e11d48}.bg-blue-600{background-color:#2563eb}
-    .text-white{color:#fff}.text-slate-300{color:#cbd5e1}.text-slate-400{color:#94a3b8}.text-slate-500{color:#64748b}.text-slate-600{color:#475569}
-    .text-slate-700{color:#334155}.text-slate-800{color:#1e293b}.text-slate-900{color:#0f172a}.text-slate-950{color:#020617}
-    .text-amber-300{color:#fcd34d}.text-amber-400{color:#fbbf24}.text-amber-700{color:#b45309}.text-amber-800{color:#92400e}.text-amber-900{color:#78350f}
-    .text-emerald-600{color:#059669}.text-emerald-700{color:#047857}.text-emerald-900{color:#064e3b}
-    .text-rose-500{color:#f43f5e}.text-rose-600{color:#e11d48}.text-rose-700{color:#be123c}
-    .text-\[11px\]{font-size:11px}.text-xs{font-size:12px}.text-sm{font-size:14px}.text-base{font-size:16px}.text-lg{font-size:18px}.text-2xl{font-size:24px}
-    .font-medium{font-weight:500}.font-semibold{font-weight:600}.font-bold{font-weight:700}.uppercase{text-transform:uppercase}
-    .text-left{text-align:left}.text-right{text-align:right}.text-center{text-align:center}.whitespace-nowrap{white-space:nowrap}
-    .shadow-sm{box-shadow:0 1px 2px rgba(0,0,0,.05)}.shadow-md{box-shadow:0 4px 6px -1px rgba(0,0,0,.1)}.shadow-xl{box-shadow:0 20px 25px -5px rgba(0,0,0,.1)}
-    .cursor-pointer{cursor:pointer}.object-cover{object-fit:cover}
-    button{cursor:pointer}
-    @media(min-width:640px){.sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.sm\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.sm\:text-sm{font-size:14px}.sm\:text-xl{font-size:20px}}
-    @media(min-width:1024px){.lg\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.lg\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.lg\:grid-cols-12{grid-template-columns:repeat(12,minmax(0,1fr))}.lg\:col-span-4{grid-column:span 4/span 4}.lg\:col-span-8{grid-column:span 8/span 8}}
-  </style>
-  <script>
-    if (typeof tailwind !== "undefined") {
-      var fb = document.getElementById("offline-tailwind-fallback");
-      if (fb) fb.remove();
-    }
-  </script>
   <style>
     body {
       font-family: 'Noto Sans Gujarati', 'Inter', system-ui, -apple-system, sans-serif;
@@ -74,12 +22,11 @@
     }
     .tabular-nums { font-variant-numeric: tabular-nums; }
     @page {
-      size: A4 portrait;
-      margin: 5mm;
+      margin: 10mm;
     }
     @page partnerA4 {
       size: A4 portrait;
-      margin: 5mm;
+      margin: 10mm;
     }
     @media print {
       .no-print { display: none !important; }
@@ -103,22 +50,15 @@
         margin: 0 !important;
         padding: 0 !important;
       }
-      body.printing-order:not(.printing-partner-a4) #order-print-sheet > div {
-        min-height: 278mm;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+      body.printing-order:not(.printing-partner-a4) #order-print-sheet {
+        zoom: 1.22;
       }
       body.printing-partner-a4 #order-print-sheet {
         page: partnerA4;
         width: 100% !important;
-        max-width: 100% !important;
+        max-width: 190mm !important;
         margin: 0 auto !important;
         padding: 0 !important;
-      }
-      body.printing-partner-a4 .break-inside-avoid {
-        break-inside: auto !important;
-        page-break-inside: auto !important;
       }
     }
     /* Custom thin scrollbar */
@@ -254,7 +194,7 @@
             🌙 Dark Mode
           </button>
           <button id="btn-menu-sheet-sync" type="button" class="px-3 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 border border-emerald-500 text-white text-xs font-bold transition whitespace-nowrap">
-            🔄 2-Way Sheet સિંક (App ↔ Sheet)
+            📊 M S W__2027 Sheet સિંક
           </button>
         </div>
       </div>
@@ -411,20 +351,11 @@
           </button>
         </div>
 
-        <div class="flex items-center gap-2 pt-1">
-          <label class="inline-flex items-center gap-2 text-xs font-semibold text-slate-700 cursor-pointer select-none">
-            <input id="chk-auto-twoway" type="checkbox" class="w-4 h-4 accent-emerald-600 rounded" />
-            <span>🔄 ઓટો 2-Way સિંક ચાલુ રાખો (એપમાં ફેરફાર કરતા જ Google Sheet M S W__2027 માં પણ સેવ થાય)</span>
-          </label>
-        </div>
-
         <div class="flex flex-wrap items-center gap-2 pt-1">
-          <button id="btn-twoway-sync" type="button" class="px-3.5 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs rounded-xl shadow-sm transition">🔄 2-Way સિંક (App ↔ Sheet)</button>
-          <button id="btn-sheet-sync" type="button" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-sm transition">📊 Sheet માંથી લાવો (Sheet → App)</button>
-          <button id="btn-sheet-push" type="button" class="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-sm transition">📤 Sheet માં મોકલો (App → Sheet)</button>
-          <button id="btn-drive-sync-now" type="button" class="px-3.5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-xs rounded-xl transition" data-i18n="driveSyncNow">
+          <button id="btn-drive-sync-now" type="button" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-xl transition" data-i18n="driveSyncNow">
             અત્યારે Drive માં સેવ કરો
           </button>
+          <button id="btn-sheet-sync" type="button" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-sm transition">📊 Google Sheet (M S W__2027) માંથી લાવો</button>
           <button id="btn-drive-restore" type="button" class="px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs rounded-xl transition" data-i18n="driveRestore">
             Drive માંથી ડેટા પાછો લાવો
           </button>
@@ -527,8 +458,7 @@
       shopName: 'Ma Shakti Welding Work (Personal)',
       tagline: 'Orders, Labor, Attendance & Partner Ledger',
       logoDataUrl: '',
-      hideLogo: false,
-      logoRemovedManually: false,
+      hideLogo: true,
       proprietors: [
         { name: '', phone: '', address: '' }
       ],
@@ -973,24 +903,16 @@
       if (lastEl && lastSync) lastEl.textContent = `${t('lastDriveBackup')}: ${lastSync}`;
     }
 
-    const AUTO_TWOWAY_KEY = 'maa_shakti_auto_twoway_v1';
-    function isAutoTwoWayEnabled() {
-      try {
-        const v = localStorage.getItem(AUTO_TWOWAY_KEY);
-        return v === null ? true : v === 'true';
-      } catch (e) { return true; }
-    }
-
     let _driveSyncTimer = null;
     function scheduleDriveSync() {
       const url = getGasUrl();
       if (!url) return;
       updateDriveSyncUI('syncing', true);
       clearTimeout(_driveSyncTimer);
-      _driveSyncTimer = setTimeout(() => { syncToGoogleDrive(false, isAutoTwoWayEnabled()); }, 1400);
+      _driveSyncTimer = setTimeout(() => { syncToGoogleDrive(false); }, 1200);
     }
 
-    async function syncToGoogleDrive(showAlertToast, syncSheet = isAutoTwoWayEnabled()) {
+    async function syncToGoogleDrive(showAlertToast) {
       const url = getGasUrl();
       if (!url) {
         if (showAlertToast) showToast(t('driveNeedUrl'));
@@ -998,8 +920,7 @@
       }
       updateDriveSyncUI('syncing', true);
       const payload = JSON.stringify({
-        action: syncSheet && state.orders.length > 0 ? 'saveSheet' : 'save',
-        syncToSheet: Boolean(syncSheet && state.orders.length > 0),
+        action: 'save',
         orders: state.orders,
         contact: state.contact,
         updatedAt: new Date().toISOString()
@@ -1023,11 +944,6 @@
         updateDriveSyncUI(t('driveConnectedBadge'), true);
         if (showAlertToast) showToast(t('driveSavedOk'));
       } catch (err) {
-        if (typeof navigator !== 'undefined' && navigator.onLine === false) {
-          updateDriveSyncUI(t('driveErr'), false);
-          if (showAlertToast) showToast(t('driveNetErr'));
-          return;
-        }
         try {
           await fetch(url, {
             method: 'POST',
@@ -1035,8 +951,10 @@
             headers: { 'Content-Type': 'text/plain;charset=utf-8' },
             body: payload
           });
-          updateDriveSyncUI('Drive: CORS અનવેરિફાઇડ', true);
-          if (showAlertToast) showToast('Drive પર વિનંતી મોકલી છે, પરંતુ CORS ને કારણે સેવ થયું કે નહીં તે ચકાસી શકાયું નથી.');
+          const nowStr = `${todayDDMMYYYY()} ${new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}`;
+          try { localStorage.setItem(GAS_LAST_SYNC_KEY, nowStr); } catch (e) {}
+          updateDriveSyncUI(t('driveConnectedBadge'), true);
+          if (showAlertToast) showToast(t('driveSentOk'));
         } catch (e2) {
           updateDriveSyncUI(t('driveErr'), false);
           if (showAlertToast) showToast(t('driveNetErr'));
@@ -1044,7 +962,7 @@
       }
     }
 
-    async function restoreFromGoogleDrive(silent = false) {
+    async function restoreFromGoogleDrive(silent) {
       const url = getGasUrl();
       if (!url) { if (!silent) showToast(t('driveNeedUrl')); return; }
       updateDriveSyncUI('syncing', true);
@@ -1089,16 +1007,20 @@
           return;
         }
         if (data && data.status === 'ok' && Array.isArray(data.orders)) {
-          data.orders.forEach(o => {
-            const hasActivity = (o.laborItems && o.laborItems.length > 0) || (o.advances && o.advances.length > 0) || (o.upads && o.upads.length > 0) || (o.expenses && o.expenses.length > 0) || (o.sureshAtt && o.sureshAtt.length > 0) || (o.dipakAtt && o.dipakAtt.length > 0);
-            if (!hasActivity && o.dipakFee === 1000 && (!o.dipakAtt || o.dipakAtt.length === 0)) {
-              o.dipakFee = 0;
-              if (Array.isArray(o.workers)) {
-                o.workers.forEach(w => { if (w.mode === 'lumpsum' && (!w.att || w.att.length === 0)) w.lumpsumFee = 0; });
-              }
+          const incoming = normalizeOrdersDates(data.orders);
+          const existingNonSample = (state.orders || []).filter(o => !String(o.id || '').startsWith('ord_'));
+          const merged = incoming.map(inc => {
+            const match = existingNonSample.find(ex => ex.id === inc.id || (ex.orderNo && inc.orderNo && ex.orderNo === inc.orderNo && ex.name === inc.name));
+            if (match && (!inc.workers || inc.workers.every(w => !w.att || w.att.length === 0)) && match.workers && match.workers.some(w => w.att && w.att.length > 0)) {
+              inc.workers = match.workers;
             }
+            return inc;
           });
-          state.orders = normalizeOrdersDates(data.orders);
+          existingNonSample.forEach(ex => {
+            const exists = merged.some(m => m.id === ex.id || (m.orderNo && ex.orderNo && m.orderNo === ex.orderNo && m.name === ex.name));
+            if (!exists) merged.push(ex);
+          });
+          state.orders = merged;
           state.selectedOrderId = state.orders[0]?.id || null;
           try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state.orders)); } catch (e) {}
           const nowStr = `${todayDDMMYYYY()} ${new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}`;
@@ -1121,59 +1043,6 @@
       }
     }
 
-    async function syncToGoogleSheet(silent = false) {
-      const url = getGasUrl();
-      if (!url) { if (!silent) showToast(t('driveNeedUrl')); return; }
-      if (!state.orders || state.orders.length === 0) {
-        if (!silent) showToast('એપમાં કોઈ ઓર્ડર નથી — પહેલા Sheet માંથી લાવો અથવા નવો ઓર્ડર ઉમેરો.');
-        return;
-      }
-      updateDriveSyncUI(t('driveBadgeSyncing'), true);
-      const payload = JSON.stringify({
-        action: 'saveSheet',
-        syncToSheet: true,
-        orders: state.orders,
-        contact: state.contact,
-        updatedAt: new Date().toISOString()
-      });
-      try {
-        const res = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: payload
-        });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const resJson = await res.json();
-        if (resJson && resJson.status === 'ok') {
-          if (Array.isArray(resJson.orders)) {
-            state.orders = normalizeOrdersDates(resJson.orders);
-            if (!state.orders.some(o => o.id === state.selectedOrderId)) {
-              state.selectedOrderId = state.orders[0]?.id || null;
-            }
-            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state.orders)); } catch (e) {}
-          }
-          const nowStr = `${todayDDMMYYYY()} ${new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}`;
-          try { localStorage.setItem(GAS_LAST_SYNC_KEY, nowStr); } catch (e) {}
-          updateDriveSyncUI(t('driveConnectedBadge'), true);
-          renderDashboard(); renderOrdersView(); renderAttendanceView();
-          if (!silent) showToast(`Google Sheet (M S W__2027) માં ${resJson.updatedCount || state.orders.length} ઓર્ડર અપડેટ થયા! ✓`);
-        } else {
-          updateDriveSyncUI(t('driveErr'), false);
-          if (!silent) showToast(resJson?.message || 'Sheet માં સેવ કરવામાં ભૂલ આવી — નવો Apps Script કોડ Deploy કરો.');
-        }
-      } catch (err) {
-        updateDriveSyncUI('કનેક્શન / CORS એરર', false);
-        if (!silent) showToast('Sheet માં મોકલી શકાયું નહીં — નવો Apps Script કોડ Deploy કરેલો છે કે નહીં તે ચેક કરો.');
-      }
-    }
-
-    async function twoWaySync(silent = false) {
-      if (!state.orders || state.orders.length === 0) {
-        return syncFromGoogleSheet(silent);
-      }
-      return syncToGoogleSheet(silent);
-    }
-
     function openGasGuideModal() {
       const gasCode = `const SHEET_ID = '1u5CzjmkSPb6ArzbMvqZsPhHTmO6gXbM1AgUQ5XDvPOQ';
 const BACKUP_FILE_NAME = 'MSW_Personal_Auto_Backup.json';
@@ -1192,133 +1061,94 @@ function readMswSheetOrders() {
   const orders = [];
   sheets.forEach((sh, idx) => {
     const sName = sh.getName();
-    const sLower = sName.toLowerCase();
-    if (sName.indexOf('કોપિ') !== -1 || sLower.indexOf('copy') !== -1 || sName.indexOf('ટેમ્પલેટ') !== -1 || sLower.indexOf('template') !== -1) return;
-    const lastRow = Math.max(80, sh.getLastRow());
-    const lastCol = Math.max(14, sh.getLastColumn());
+    if (sName.indexOf('કોપિ') !== -1 || sName.trim() === 'નવું ટેમ્પલેટ') return;
+    const lastRow = Math.max(sh.getLastRow(), 79);
+    const lastCol = Math.max(sh.getLastColumn(), 14);
     const v = sh.getRange(1, 1, lastRow, lastCol).getValues();
 
-    const isNewLayout = String((v[2] && v[2][1]) || '').indexOf('ઓર્ડર નામ') !== -1;
+    const isNewTemplate = String(v[2] && v[2][1] || '').indexOf('ઓર્ડર નામ') !== -1;
 
-    if (isNewLayout) {
-      const orderName = String((v[2] && v[2][2]) || '').trim();
+    if (isNewTemplate) {
+      const orderName = String(v[2][2] || '').trim() || sName;
       if (!orderName) return;
       const orderNo = Number(v[3] && v[3][2]) || (idx + 1);
-      const customerPhone = String((v[3] && v[3][3]) || '').replace(/^મો\\s*:?\\s*/i, '').trim();
+      const phone = String(v[3] && v[3][3] || '').replace('મો :', '').replace('મો:', '').trim();
 
-      // Partners from F3:F4 (F3 = Proprietor)
-      const proprietor = String((v[2] && v[2][5]) || '').trim();
-      const sheetPartners = [];
-      for (let pr = 2; pr <= 3; pr++) {
-        const pName = String((v[pr] && v[pr][5]) || '').trim();
-        if (pName && sheetPartners.indexOf(pName) === -1) sheetPartners.push(pName);
-      }
+      const p1 = String(v[2] && v[2][5] || '').trim() || 'મહેશ';
+      const p2 = String(v[3] && v[3][5] || '').trim();
+      const partners = p2 ? [p1, p2] : [p1];
 
-      // Customer Advances (B8:C14 -> r=7..13)
       const advances = [];
-      for (let r = 7; r <= 13; r++) {
-        const dt = fmtDate(v[r] && v[r][1]);
-        const amt = Number(v[r] && v[r][2]) || 0;
-        if (amt > 0 || dt) advances.push({ date: dt, amount: amt });
-      }
-
-      // Labor Items (D8:E14 -> r=7..13)
       const laborItems = [];
-      for (let r = 7; r <= 13; r++) {
-        const desc = String((v[r] && v[r][3]) || '').trim();
-        const amt = Number(v[r] && v[r][4]) || 0;
-        if (desc || amt > 0) laborItems.push({ desc, amount: amt });
-      }
-
-      // Clean Material Expenses (G8:I17 -> r=7..16)
       const expenses = [];
-      for (let r = 7; r <= 16; r++) {
-        const who = String((v[r] && v[r][6]) || '').trim();
-        const amount = Number(v[r] && v[r][7]) || 0;
-        const desc = String((v[r] && v[r][8]) || '').trim();
-        if (amount > 0 || desc) expenses.push({ who, amount, desc });
-      }
-
-      // Workers & Attendance (Row 50 names C50:G50 -> r=49, c=2..6; Row 51 rate -> r=50; Rows 53..76 att -> r=52..75)
-      const dynWorkers = [];
-      let sureshAtt = [];
-      let dipakAtt = [];
-      for (let c = 2; c <= 6; c++) {
-        const wName = String((v[49] && v[49][c]) || '').trim();
-        if (!wName) continue;
-        const wAtt = [];
-        for (let r = 52; r <= 75; r++) {
-          const dt = fmtDate(v[r] && v[r][1]);
-          const dVal = v[r] && v[r][c];
-          if (!dt) continue;
-          if (dVal !== '' && dVal !== null && dVal !== undefined) {
-            wAtt.push({ date: dt, days: Number(dVal) || 0, rowIdx: r - 52 });
-          }
-        }
-        const rateCell = String((v[50] && v[50][c]) || '').trim();
-        const numRateCell = Number(rateCell);
-        const isLumpsumCell = /ઉચ્ચક|lumpsum/i.test(rateCell);
-        const mode = isLumpsumCell ? 'lumpsum' : 'daily';
-        const rate = (!isLumpsumCell && !isNaN(numRateCell) && numRateCell > 0) ? numRateCell : (isLumpsumCell ? 0 : 350);
-        if (wName === 'સુરેશ') sureshAtt = wAtt;
-        if (wName === 'દિપક') dipakAtt = wAtt;
-        dynWorkers.push({ name: wName, mode, rate, lumpsumFee: 0, att: wAtt });
-      }
-
-      // Unified Upad (B21:I32 -> header r=20, rows r=21..31)
-      const upadCols = [];
-      for (let uc = 2; uc <= 8; uc++) {
-        const uRaw = String((v[20] && v[20][uc]) || '').trim();
-        if (uRaw && !/^ભાગીદાર [૧૨]$|^કારીગર [૧-૫]$/.test(uRaw)) {
-          upadCols.push({ col: uc, name: uRaw });
-        }
-      }
       const upads = [];
-      for (let r = 21; r <= 31; r++) {
-        const dt = fmtDate(v[r] && v[r][1]);
-        const bp = {};
-        let anyAmt = false;
-        upadCols.forEach(uc => {
-          const val = Number(v[r] && v[r][uc.col]) || 0;
-          bp[uc.name] = val;
-          if (val > 0) anyAmt = true;
-        });
-        if (dt || anyAmt) {
-          upads.push({
-            date: dt,
-            madhusinh: bp['માધુસિંહ'] || 0,
-            mahesh: bp['મહેશ'] || 0,
-            suresh: bp['સુરેશ'] || 0,
-            byPerson: bp
-          });
+      const workerMap = {};
+      function getWorker(name, mode, rate) {
+        if (!workerMap[name]) workerMap[name] = { name, mode: mode || 'daily', rate: rate || 350, att: [] };
+        return workerMap[name];
+      }
+
+      for (let r = 7; r < v.length; r++) {
+        const row = v[r];
+        if (!row) continue;
+        const bStr = String(row[1] || '').trim();
+        const dStr = String(row[3] || '').trim();
+        const gStr = String(row[6] || '').trim();
+
+        // Stop reading top tables if we hit summary/total rows or lower sections
+        if (bStr.indexOf('કુલ') === 0 || dStr.indexOf('કુલ') === 0) break;
+
+        // Advances: B=date, C=amount
+        const advAmt = Number(String(row[2] || '').replace(/[₹,\s]/g, '')) || 0;
+        const advDt = fmtDate(row[1]);
+        if (advAmt > 0 || (advDt && advDt.indexOf('તારીખ') === -1)) {
+          advances.push({ date: advDt, amount: advAmt });
+        }
+
+        // Labor items: D=desc, E=amount
+        const labDesc = dStr;
+        const labAmt = Number(String(row[4] || '').replace(/[₹,\s]/g, '')) || 0;
+        if (labDesc || labAmt > 0) {
+          laborItems.push({ desc: labDesc, amount: labAmt });
+        }
+
+        // Expenses: G=who, H=amount, I=desc
+        const expWho = gStr;
+        const expAmt = Number(String(row[7] || '').replace(/[₹,\s]/g, '')) || 0;
+        const expDesc = String(row[8] || '').trim();
+        if (expWho || expAmt > 0 || expDesc) {
+          expenses.push({ who: expWho, amount: expAmt, desc: expDesc });
         }
       }
+
+      const workers = Object.keys(workerMap).length ? Object.values(workerMap) : [
+        { name: 'સુરેશ', mode: 'daily', rate: 350, att: [] },
+        { name: 'દિપક', mode: 'lumpsum', rate: 0, lumpsumFee: 1000, att: [] }
+      ];
 
       orders.push({
         id: 'msw_' + orderNo + '_' + sName,
-        sheetName: sName,
         orderNo,
         name: orderName,
-        customerPhone,
-        proprietor,
-        partners: sheetPartners,
-        workers: dynWorkers,
+        phone,
+        partners,
+        workers,
         laborItems,
         advances,
         upads,
         expenses,
-        sureshAtt,
-        dipakAtt,
-        dipakFee: 0,
+        sureshAtt: [],
+        dipakAtt: [],
+        dipakFee: 1000,
         extraMahesh: 0,
         extraMadhusinh: 0
       });
       return;
     }
 
-    // Old Layout fallback (with bug fixes)
-    const rawTitle = v[1].slice(1, 8).map(x => String(x || '').trim()).filter(Boolean)[0] || '';
-    const orderName = rawTitle.replace('ઓર્ડર નામ :', '').replace('ઓર્ડર નામ:', '').trim();
+    // Legacy template fallback (A1:N44)
+    const rawTitle = String(v[1][1] || '').replace('ઓર્ડર નામ :', '').replace('ઓર્ડર નામ:', '').trim();
+    const orderName = rawTitle || sName;
     if (!orderName) return;
     const orderNo = Number(v[1][8]) || (idx + 1);
 
@@ -1336,156 +1166,58 @@ function readMswSheetOrders() {
       if (desc || amt > 0) laborItems.push({ desc, amount: amt });
     }
 
-    const upadCols = [];
-    for (let uc = 2; uc <= 5; uc++) {
-      const uRaw = String((v[20] && v[20][uc]) || '').replace(/ની ઉપાડ|ઉપાડ/g, '').trim();
-      if (uRaw) upadCols.push({ col: uc, name: uRaw });
-    }
     const upads = [];
     for (let r = 21; r <= 31; r++) {
       const dt = fmtDate(v[r][1]);
-      const bp = {};
-      let anyAmt = false;
-      upadCols.forEach(uc => {
-        const val = Number(v[r][uc.col]) || 0;
-        bp[uc.name] = val;
-        if (val > 0) anyAmt = true;
-      });
-      if (dt || anyAmt) {
-        upads.push({
-          date: dt,
-          madhusinh: bp['માધુસિંહ'] || 0,
-          mahesh: bp['મહેશ'] || 0,
-          suresh: bp['સુરેશ'] || 0,
-          byPerson: bp
-        });
+      const madhusinh = Number(v[r][2]) || 0;
+      const mahesh = Number(v[r][3]) || 0;
+      const suresh = Number(v[r][4]) || 0;
+      if (dt || madhusinh > 0 || mahesh > 0 || suresh > 0) {
+        upads.push({ date: dt, madhusinh, mahesh, suresh, byPerson: { 'માધુસિંહ': madhusinh, 'મહેશ': mahesh, 'સુરેશ': suresh } });
       }
     }
 
-    // Extra workers upad (Rows 47..57 -> header r=46, rows r=47..56)
-    const extraUpadCols = [];
-    for (let uc = 2; uc <= 5; uc++) {
-      const uRaw = String((v[46] && v[46][uc]) || '').trim();
-      if (uRaw) extraUpadCols.push({ col: uc, name: uRaw });
-    }
-    if (extraUpadCols.length > 0) {
-      for (let r = 47; r <= 56 && r < v.length; r++) {
-        const dt = fmtDate(v[r][1]);
-        const bp = {};
-        let anyAmt = false;
-        extraUpadCols.forEach(uc => {
-          const val = Number(v[r][uc.col]) || 0;
-          bp[uc.name] = val;
-          if (val > 0) anyAmt = true;
-        });
-        if (dt || anyAmt) {
-          upads.push({ date: dt, madhusinh: 0, mahesh: 0, suresh: 0, byPerson: bp });
-        }
-      }
-    }
-
-    // Material Expenses only (G22:I27 -> r=21..26 so H28:H32 worker wages are not double-counted)
     const expenses = [];
-    for (let r = 21; r <= 26; r++) {
+    for (let r = 21; r <= 29; r++) {
       const who = String(v[r][6] || '').trim();
       const amount = Number(v[r][7]) || 0;
       const desc = String(v[r][8] || '').trim();
-      if (amount > 0 || desc) expenses.push({ who, amount, desc });
+      if (who || amount > 0 || desc) expenses.push({ who, amount, desc });
     }
 
-    const workerFeeHints = [];
-    for (let r = 30; r <= 31; r++) {
-      const fAmt = Number(v[r] && v[r][7]) || 0;
-      const fDesc = String((v[r] && v[r][8]) || '').trim();
-      if (fAmt > 0 || fDesc) workerFeeHints.push({ amount: fAmt, desc: fDesc });
+    const sureshAtt = [];
+    const dipakAtt = [];
+    for (let r = 4; r <= 42; r++) {
+      const dt = fmtDate(v[r][10]);
+      const sDays = v[r][11];
+      const dDays = v[r][13];
+      if (!dt) continue;
+      if (sDays !== '' && sDays !== null && sDays !== undefined) sureshAtt.push({ date: dt, days: Number(sDays) || 0, rowIdx: r - 4 });
+      if (dDays !== '' && dDays !== null && dDays !== undefined) dipakAtt.push({ date: dt, days: Number(dDays) || 0, rowIdx: r - 4 });
     }
 
-    const dynWorkers = [];
-    let sureshAtt = [];
-    let dipakAtt = [];
-    let dipakFee = 0;
-
-    for (let c = 11; c < lastCol; c++) {
-      const headerName = String((v[1] && v[1][c]) || '').trim();
-      if (!headerName) continue;
-      const wName = headerName;
-      const wAtt = [];
-      for (let r = 4; r <= 42; r++) {
-        const dt = fmtDate(v[r][10]);
-        const dVal = v[r][c];
-        if (!dt) continue;
-        if (dVal !== '' && dVal !== null && dVal !== undefined) {
-          wAtt.push({ date: dt, days: Number(dVal) || 0, rowIdx: r - 4 });
-        }
-      }
-      const hint = workerFeeHints.find(h => h.desc && h.desc.indexOf(wName) !== -1);
-      const rateCell = String((v[2] && v[2][c]) || '').trim();
-      const numRateCell = Number(rateCell);
-      const isLumpsumCell = /ઉચ્ચક|lumpsum/i.test(rateCell);
-      const isSuresh = wName === 'સુરેશ';
-      const isDipak = wName === 'દિપક';
-      let mode = 'daily';
-      let rate = (!isNaN(numRateCell) && numRateCell > 0) ? numRateCell : 350;
-      let lumpsumFee = 0;
-
-      if (isSuresh) {
-        sureshAtt = wAtt;
-      } else if (isDipak || isLumpsumCell) {
-        mode = 'lumpsum';
-        rate = 0;
-        lumpsumFee = hint ? hint.amount : 0;
-        if (isDipak) { dipakAtt = wAtt; dipakFee = lumpsumFee; }
-      } else if (hint && hint.amount > 0 && wAtt.length === 0) {
-        mode = 'lumpsum';
-        rate = 0;
-        lumpsumFee = hint.amount;
-      }
-
-      dynWorkers.push({ name: wName, mode, rate, lumpsumFee, att: wAtt });
-    }
-
-    // No preloaded workers
-
-    const workerNameSet = new Set(dynWorkers.map(w => w.name));
-    const sheetPartners = [];
-    for (let pr = 9; pr <= 10; pr++) {
-      let pName = String((v[pr] && v[pr][7]) || '').trim();
-      if (pName === 'મહેશભાઈ') pName = 'મહેશ';
-      if (pName && !workerNameSet.has(pName) && sheetPartners.indexOf(pName) === -1) {
-        sheetPartners.push(pName);
-      }
-    }
-    if (sheetPartners.length === 0) {
-      for (let pc = 5; pc <= 7; pc++) {
-        let pName = String((v[38] && v[38][pc]) || '').trim();
-        if (pName === 'મહેશભાઈ') pName = 'મહેશ';
-        if (pName && !workerNameSet.has(pName) && sheetPartners.indexOf(pName) === -1) {
-          sheetPartners.push(pName);
-        }
-      }
-    }
     orders.push({
       id: 'msw_' + orderNo + '_' + sName,
-      sheetName: sName,
       orderNo,
       name: orderName,
-      proprietor: sheetPartners[0] || '', 
-      partners: sheetPartners,
-      workers: dynWorkers,
+      partners: ['મહેશ', 'માધુસિંહ'],
+      workers: [
+        { name: 'સુરેશ', mode: 'daily', rate: 350, att: sureshAtt },
+        { name: 'દિપક', mode: 'lumpsum', rate: 0, lumpsumFee: 1000, att: dipakAtt }
+      ],
       laborItems,
       advances,
       upads,
       expenses,
       sureshAtt,
       dipakAtt,
-      dipakFee,
+      dipakFee: 1000,
       extraMahesh: 0,
       extraMadhusinh: 0
     });
   });
   return orders;
 }
-
 function doGet(e) {
   try {
     const action = (e && e.parameter && e.parameter.action) || 'load';
@@ -1507,142 +1239,6 @@ function doGet(e) {
   }
 }
 
-function writeMswSheetOrders(orders) {
-  const ss = SpreadsheetApp.openById(SHEET_ID);
-  const sheets = ss.getSheets();
-  const templateSheet = sheets.find(s => s.getName().indexOf('ટેમ્પલેટ') !== -1 || s.getName().toLowerCase().indexOf('template') !== -1);
-  let updatedCount = 0;
-
-  (orders || []).forEach((o, idx) => {
-    const oName = String(o.name || '').trim();
-    if (!oName) return;
-    let sh = null;
-    if (o.sheetName) sh = ss.getSheetByName(o.sheetName);
-    if (!sh) {
-      sh = sheets.find(s => {
-        const sn = s.getName();
-        if (sn.indexOf('કોપિ') !== -1 || sn.toLowerCase().indexOf('copy') !== -1 || sn.indexOf('ટેમ્પલેટ') !== -1 || sn.toLowerCase().indexOf('template') !== -1) return false;
-        const c3 = String(s.getRange('C3').getValue() || '').trim();
-        const c4 = Number(s.getRange('C4').getValue()) || 0;
-        return (c3 && c3 === oName) || (o.orderNo && c4 === Number(o.orderNo));
-      });
-    }
-    if (!sh && templateSheet) {
-      let baseName = oName.replace(/[\\\\/?*:]/g, '_').split('[').join('_').split(']').join('_').slice(0, 90) || ('Order_' + (o.orderNo || (idx + 1)));
-      let targetName = baseName;
-      let suffix = 2;
-      while (ss.getSheetByName(targetName)) {
-        targetName = baseName.slice(0, 85) + '_' + suffix++;
-      }
-      sh = templateSheet.copyTo(ss).setName(targetName);
-      o.sheetName = targetName;
-    }
-    if (!sh) return;
-
-    const isNewLayout = String(sh.getRange('B3').getValue() || '').indexOf('ઓર્ડર નામ') !== -1;
-    if (!isNewLayout) return;
-
-    const partners = Array.isArray(o.partners) ? o.partners : [];
-    const workers = Array.isArray(o.workers) ? o.workers : [];
-
-    // Header & Partners (F3 = Proprietor, F4 = Partner 2)
-    sh.getRange('C3').setValue(oName);
-    sh.getRange('C4').setValue(Number(o.orderNo) || (idx + 1));
-    sh.getRange('D4').setValue(o.customerPhone ? ('મો : ' + o.customerPhone) : 'મો : ');
-    sh.getRange('F3').setValue(partners[0] || '');
-    sh.getRange('F4').setValue(partners[1] || '');
-
-    // Customer Advances (B8:C14 -> 7 rows)
-    const advRows = [];
-    const advs = Array.isArray(o.advances) ? o.advances : [];
-    for (let r = 0; r < 7; r++) {
-      const a = advs[r];
-      advRows.push([a ? (a.date || '') : '', a && a.amount !== '' && a.amount !== undefined ? (Number(a.amount) || 0) : '']);
-    }
-    sh.getRange(8, 2, 7, 2).setValues(advRows);
-
-    // Labor Items (D8:E14 -> 7 rows)
-    const labRows = [];
-    const labs = Array.isArray(o.laborItems) ? o.laborItems : [];
-    for (let r = 0; r < 7; r++) {
-      const l = labs[r];
-      labRows.push([l ? (l.desc || '') : '', l && l.amount !== '' && l.amount !== undefined ? (Number(l.amount) || 0) : '']);
-    }
-    sh.getRange(8, 4, 7, 2).setValues(labRows);
-
-    // Material Expenses (G8:I17 -> 10 rows)
-    const expRows = [];
-    const exps = Array.isArray(o.expenses) ? o.expenses : [];
-    for (let r = 0; r < 10; r++) {
-      const x = exps[r];
-      expRows.push([
-        x ? (x.who || '') : '',
-        x && x.amount !== '' && x.amount !== undefined ? (Number(x.amount) || 0) : '',
-        x ? (x.desc || '') : ''
-      ]);
-    }
-    sh.getRange(8, 7, 10, 3).setValues(expRows);
-
-    // Upad rows (B22:I32 -> 11 rows: Date, P1, P2, W1..W5)
-    const upadRows = [];
-    const upads = Array.isArray(o.upads) ? o.upads : [];
-    const colNames = [partners[0] || '', partners[1] || '', (workers[0] && workers[0].name) || '', (workers[1] && workers[1].name) || '', (workers[2] && workers[2].name) || '', (workers[3] && workers[3].name) || '', (workers[4] && workers[4].name) || ''];
-    for (let r = 0; r < 11; r++) {
-      const u = upads[r];
-      const rowArr = [u ? (u.date || '') : ''];
-      for (let c = 0; c < 7; c++) {
-        const person = colNames[c];
-        let val = '';
-        if (u && person) {
-          if (u.byPerson && u.byPerson[person] !== undefined && u.byPerson[person] !== '') val = Number(u.byPerson[person]) || 0;
-          else if (person === 'માધુસિંહ' && u.madhusinh) val = Number(u.madhusinh) || 0;
-          else if (person === 'મહેશ' && u.mahesh) val = Number(u.mahesh) || 0;
-          else if (person === 'સુરેશ' && u.suresh) val = Number(u.suresh) || 0;
-        }
-        rowArr.push(val);
-      }
-      upadRows.push(rowArr);
-    }
-    sh.getRange(22, 2, 11, 8).setValues(upadRows);
-
-    // Workers & Rates (C50:G51 -> 5 cols)
-    const wNames = [];
-    const wRates = [];
-    for (let c = 0; c < 5; c++) {
-      const w = workers[c];
-      wNames.push(w ? (w.name || '') : '');
-      wRates.push(w ? (w.mode === 'lumpsum' ? 'ઉચ્ચક' : (Number(w.rate) || 0)) : '');
-    }
-    sh.getRange(50, 3, 1, 5).setValues([wNames]);
-    sh.getRange(51, 3, 1, 5).setValues([wRates]);
-
-    // Attendance rows (B53:G76 -> 24 rows)
-    const attRowMap = new Map();
-    workers.slice(0, 5).forEach((w, wIdx) => {
-      const attList = (w.name === 'સુરેશ' && Array.isArray(o.sureshAtt) && o.sureshAtt.length) ? o.sureshAtt
-        : (w.name === 'દિપક' && Array.isArray(o.dipakAtt) && o.dipakAtt.length) ? o.dipakAtt
-        : (Array.isArray(w.att) ? w.att : []);
-      attList.forEach(item => {
-        const key = (item.rowIdx !== undefined && item.rowIdx !== null) ? ('r_' + item.rowIdx) : ('d_' + (item.date || ''));
-        if (!attRowMap.has(key)) attRowMap.set(key, { date: item.date || '', days: ['', '', '', '', ''] });
-        const rec = attRowMap.get(key);
-        if (!rec.date && item.date) rec.date = item.date;
-        rec.days[wIdx] = (item.days !== '' && item.days !== undefined && item.days !== null) ? (Number(item.days) || 0) : '';
-      });
-    });
-    const attListMerged = Array.from(attRowMap.values());
-    const attGrid = [];
-    for (let r = 0; r < 24; r++) {
-      const rec = attListMerged[r];
-      attGrid.push(rec ? [rec.date || '', ...rec.days] : ['', '', '', '', '', '']);
-    }
-    sh.getRange(53, 2, 24, 6).setValues(attGrid);
-    updatedCount++;
-  });
-  SpreadsheetApp.flush();
-  return updatedCount;
-}
-
 function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
@@ -1657,13 +1253,7 @@ function doPost(e) {
     } else {
       DriveApp.createFile(BACKUP_FILE_NAME, jsonStr, MimeType.PLAIN_TEXT);
     }
-    let updatedCount = 0;
-    let freshOrders = null;
-    if (data.action === 'saveSheet' || data.syncToSheet) {
-      updatedCount = writeMswSheetOrders(data.orders || []);
-      freshOrders = readMswSheetOrders();
-    }
-    return ContentService.createTextOutput(JSON.stringify({ status: 'ok', updatedCount, orders: freshOrders }))
+    return ContentService.createTextOutput(JSON.stringify({ status: 'ok' }))
       .setMimeType(ContentService.MimeType.JSON);
   } catch (err) {
     return ContentService.createTextOutput(JSON.stringify({ status: 'error', message: err.toString() }))
@@ -1757,9 +1347,6 @@ function doPost(e) {
         }));
       }
       if (c.shopAddress === undefined) c.shopAddress = c.address || '';
-      if (rawObj && rawObj.hideLogo === true && !rawObj.logoDataUrl && !rawObj.logoRemovedManually) {
-        c.hideLogo = false;
-      }
       return c;
     }
 
@@ -1935,7 +1522,6 @@ function doPost(e) {
                 tagline: document.getElementById('c-tagline').value.trim(),
                 logoDataUrl: pendingLogoDataUrl,
                 hideLogo: pendingHideLogo,
-                logoRemovedManually: pendingLogoRemovedManually,
                 proprietors: cleanedProps,
                 shopAddress: document.getElementById('c-shop-addr').value.trim(),
                 gstNo: (document.getElementById('c-gst')?.value || '').trim().toUpperCase(),
@@ -1951,7 +1537,6 @@ function doPost(e) {
 
       let pendingLogoDataUrl = c.logoDataUrl || '';
       let pendingHideLogo = !!c.hideLogo;
-      let pendingLogoRemovedManually = !!c.logoRemovedManually;
       document.getElementById('c-logo-file').addEventListener('change', (ev) => {
         const file = ev.target.files[0];
         if (!file) return;
@@ -1968,7 +1553,6 @@ function doPost(e) {
             canvas.getContext('2d').drawImage(img, 0, 0, w, h);
             pendingLogoDataUrl = canvas.toDataURL('image/webp', 0.85);
             pendingHideLogo = false;
-            pendingLogoRemovedManually = false;
             const prev = document.getElementById('c-logo-preview');
             prev.src = pendingLogoDataUrl;
             prev.classList.remove('hidden');
@@ -1980,7 +1564,6 @@ function doPost(e) {
       document.getElementById('c-logo-remove').addEventListener('click', () => {
         pendingLogoDataUrl = '';
         pendingHideLogo = true;
-        pendingLogoRemovedManually = true;
         document.getElementById('c-logo-preview').classList.add('hidden');
       });
 
@@ -2060,70 +1643,70 @@ function doPost(e) {
           </table>
         </div>
 
-        <!-- Expenses & Partner Share Calculation (Narrow Compact Tables with Space Between) -->
-        <div class="flex justify-between items-start gap-6 pt-2 border-t border-slate-400 break-inside-avoid">
-          <div class="w-[42%]">
-            <h3 class="text-[11px] font-bold uppercase text-slate-800 pb-0.5 mb-1">${t('expWagePrint')}</h3>
-            <table class="w-full text-[10px] border-collapse border border-slate-500">
+        <!-- Expenses (Narrow Half-Width) & Partner Share Calculation Side-by-Side -->
+        <div class="grid grid-cols-2 gap-3 pt-2 border-t border-slate-400 break-inside-avoid">
+          <div>
+            <h3 class="text-xs font-bold uppercase text-slate-800 pb-1 mb-1">${t('expWagePrint')}</h3>
+            <table class="w-full text-[11px] border-collapse border border-slate-500">
               <thead class="bg-slate-100 text-slate-800">
                 <tr>
-                  <th class="py-0.5 px-1 text-left border border-slate-400">${t('colExpWageDesc')}</th>
-                  <th class="py-0.5 px-1 text-right border border-slate-400 w-16">${t('colAmt')}</th>
+                  <th class="py-1 px-1.5 text-left border border-slate-400">${t('colExpWageDesc')}</th>
+                  <th class="py-1 px-1.5 text-right border border-slate-400 w-20">${t('colAmt')}</th>
                 </tr>
               </thead>
               <tbody class="tabular-nums">
                 ${(o.expenses || []).map(e => `
                   <tr>
-                    <td class="py-0.5 px-1 border border-slate-400">${escHtml(e.who ? `${e.who}: ${e.desc || t('sumExpense')}` : (e.desc || t('sumExpense')))}</td>
-                    <td class="py-0.5 px-1 text-right border border-slate-400 whitespace-nowrap">${fmtINR(e.amount)}</td>
+                    <td class="py-0.5 px-1.5 border border-slate-400">${escHtml(e.who ? `${e.who}: ${e.desc || t('sumExpense')}` : (e.desc || t('sumExpense')))}</td>
+                    <td class="py-0.5 px-1.5 text-right border border-slate-400 whitespace-nowrap">${fmtINR(e.amount)}</td>
                   </tr>
                 `).join('')}
                 ${h.workerStats.filter(w => w.wage > 0 || w.days > 0).map(w => `
                   <tr>
-                    <td class="py-0.5 px-1 border border-slate-400">${escHtml(w.name)} (${w.mode === 'daily' ? `${w.days} ${t('daysWord')} × ₹${w.rate}` : `${w.days} ${t('daysWord')}`})</td>
-                    <td class="py-0.5 px-1 text-right border border-slate-400 whitespace-nowrap">${fmtINR(w.wage)}</td>
+                    <td class="py-0.5 px-1.5 border border-slate-400">${escHtml(w.name)} (${w.mode === 'daily' ? `${w.days} ${t('daysWord')} × ₹${w.rate}` : `${w.days} ${t('daysWord')}`})</td>
+                    <td class="py-0.5 px-1.5 text-right border border-slate-400 whitespace-nowrap">${fmtINR(w.wage)}</td>
                   </tr>
                 `).join('')}
               </tbody>
               <tfoot class="bg-slate-100 font-bold">
                 <tr>
-                  <td class="py-0.5 px-1 border border-slate-500">${t('sumExpense')}</td>
-                  <td class="py-0.5 px-1 text-right border border-slate-500 tabular-nums whitespace-nowrap">${fmtINR(h.totalExpense)}</td>
+                  <td class="py-1 px-1.5 border border-slate-500">${t('sumExpense')}</td>
+                  <td class="py-1 px-1.5 text-right border border-slate-500 tabular-nums whitespace-nowrap">${fmtINR(h.totalExpense)}</td>
                 </tr>
               </tfoot>
             </table>
           </div>
 
-          <div class="w-[42%]">
-            <h3 class="text-[11px] font-bold uppercase text-slate-800 pb-0.5 mb-1">${t('partnerShareCalc')}</h3>
-            <table class="w-full text-[10px] border-collapse border border-slate-500">
+          <div>
+            <h3 class="text-xs font-bold uppercase text-slate-800 pb-1 mb-1">${t('partnerShareCalc')}</h3>
+            <table class="w-full text-[11px] border-collapse border border-slate-500">
               <thead class="bg-slate-100 text-slate-800">
                 <tr>
-                  <th class="py-0.5 px-1 text-left border border-slate-400">${t('calcDescCol')}</th>
-                  <th class="py-0.5 px-1 text-right border border-slate-400 w-16">${t('colAmt')}</th>
+                  <th class="py-1 px-1.5 text-left border border-slate-400">${t('calcDescCol')}</th>
+                  <th class="py-1 px-1.5 text-right border border-slate-400 w-20">${t('colAmt')}</th>
                 </tr>
               </thead>
               <tbody class="tabular-nums">
                 <tr>
-                  <td class="py-0.5 px-1 border border-slate-400 font-medium">${t('sumLabor')}</td>
-                  <td class="py-0.5 px-1 text-right border border-slate-400 font-semibold whitespace-nowrap">${fmtINR(h.hisabLabor)}</td>
+                  <td class="py-0.5 px-1.5 border border-slate-400 font-medium">${t('sumLabor')}</td>
+                  <td class="py-0.5 px-1.5 text-right border border-slate-400 font-semibold whitespace-nowrap">${fmtINR(h.hisabLabor)}</td>
                 </tr>
                 <tr>
-                  <td class="py-0.5 px-1 border border-slate-400 font-medium text-rose-700">${t('calcMinusExp')}</td>
-                  <td class="py-0.5 px-1 text-right border border-slate-400 font-semibold text-rose-700 whitespace-nowrap">- ${fmtINR(h.totalExpense)}</td>
+                  <td class="py-0.5 px-1.5 border border-slate-400 font-medium text-rose-700">${t('calcMinusExp')}</td>
+                  <td class="py-0.5 px-1.5 text-right border border-slate-400 font-semibold text-rose-700 whitespace-nowrap">- ${fmtINR(h.totalExpense)}</td>
                 </tr>
                 <tr class="bg-slate-100 font-bold">
-                  <td class="py-0.5 px-1 border border-slate-400">${t('calcNet')}</td>
-                  <td class="py-0.5 px-1 text-right border border-slate-400 whitespace-nowrap">${fmtINR(h.netProfit)}</td>
+                  <td class="py-0.5 px-1.5 border border-slate-400">${t('calcNet')}</td>
+                  <td class="py-0.5 px-1.5 text-right border border-slate-400 whitespace-nowrap">${fmtINR(h.netProfit)}</td>
                 </tr>
                 <tr class="bg-amber-50 font-bold">
-                  <td class="py-0.5 px-1 border border-slate-400">${t('calcPerPartner')} (÷ ${h.partners.length})</td>
-                  <td class="py-0.5 px-1 text-right border border-slate-400 whitespace-nowrap">${fmtINR(h.halfShare)}</td>
+                  <td class="py-0.5 px-1.5 border border-slate-400">${t('calcPerPartner')} (÷ ${h.partners.length})</td>
+                  <td class="py-0.5 px-1.5 text-right border border-slate-400 whitespace-nowrap">${fmtINR(h.halfShare)}</td>
                 </tr>
                 ${h.partnerStats.map(p => `
                   <tr>
-                    <td class="py-0.5 px-1 border border-slate-400">↳ <strong>${escHtml(p.name)}</strong> (${t('shareOf')})</td>
-                    <td class="py-0.5 px-1 text-right border border-slate-400 font-bold whitespace-nowrap">${fmtINR(p.share)}</td>
+                    <td class="py-0.5 px-1.5 border border-slate-400">↳ <strong>${escHtml(p.name)}</strong> (${t('shareOf')})</td>
+                    <td class="py-0.5 px-1.5 text-right border border-slate-400 font-bold whitespace-nowrap">${fmtINR(p.share)}</td>
                   </tr>
                 `).join('')}
               </tbody>
@@ -2322,15 +1905,14 @@ function doPost(e) {
       sheet.innerHTML = buildOrderPrintHtml(o, currentMode);
 
       openModal({
-        fullScreenMobile: true,
         title: `${t('orderWord')} #${o.orderNo} (${o.name}) — ${t('printPreviewTitle')}`,
         bodyHtml: `
-          <div class="flex flex-col gap-2.5 flex-1 min-h-0">
-            <div class="flex gap-2 bg-slate-100 p-1.5 rounded-2xl border border-slate-200 shrink-0">
+          <div class="space-y-3">
+            <div class="flex gap-2 bg-slate-100 p-1.5 rounded-2xl border border-slate-200">
               <button type="button" id="btn-mode-customer">${t('modeCustBtn')}</button>
               <button type="button" id="btn-mode-partner">${t('modePartBtn')}</button>
             </div>
-            <div id="modal-print-preview-box" class="flex-1 overflow-y-auto border border-slate-200 rounded-xl p-1.5 sm:p-3 bg-slate-50">${sheet.innerHTML}</div>
+            <div id="modal-print-preview-box" class="max-h-[60vh] overflow-y-auto border border-slate-200 rounded-xl p-3 bg-slate-50">${sheet.innerHTML}</div>
           </div>
         `,
         actions: [
@@ -2388,9 +1970,9 @@ function doPost(e) {
               const safeCust = String(o.name || 'Customer').replace(/[\\/:*?"<>|]+/g, '_').replace(/\s+/g, '_').trim();
               const modeLabel = currentMode === 'partner' ? 'પાર્ટનર_હિસાબ' : 'ગ્રાહક_બિલ';
               const fileTitle = `${safeCust}_${modeLabel}_Order_${o.orderNo}`;
-              const a4Style = currentMode === 'partner' ? '<style>@page{size:A4 portrait;margin:5mm;}@media print{html,body{height:auto!important;margin:0!important;padding:0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}.break-inside-avoid{break-inside:auto!important;page-break-inside:auto!important;}}</style>' : '<style>@page{size:A4 portrait;margin:5mm;}@media print{html,body{height:auto!important;margin:0!important;padding:0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}#bill-wrap>div{min-height:278mm;display:flex;flex-direction:column;justify-content:space-between;}}</style>';
-              const wrapClass = 'w-full mx-auto';
-              const billDoc = `<!DOCTYPE html><html lang="${state.lang || 'en'}"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${escHtml(fileTitle)}</title><style>
+              const a4Style = currentMode === 'partner' ? '<style>@page{size:A4 portrait;margin:10mm;}@media print{html,body{height:auto!important;margin:0!important;padding:0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}}</style>' : '<style>@page{margin:10mm;}@media print{html,body{height:auto!important;margin:0!important;padding:0!important;zoom:1.22;-webkit-print-color-adjust:exact;print-color-adjust:exact;}}</style>';
+              const wrapClass = currentMode === 'partner' ? 'max-w-[190mm] mx-auto' : 'w-full';
+              const billDoc = `<!DOCTYPE html><html lang="${state.lang || 'en'}"><head><meta charset="UTF-8"><title>${escHtml(fileTitle)}</title><style>
 *,*::before,*::after{box-sizing:border-box}
 body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#0f172a;background:#fff;line-height:1.4}
 .bg-white{background:#fff}.bg-slate-50{background:#f8fafc}.bg-slate-100{background:#f1f5f9}.bg-slate-900{background:#0f172a}.bg-amber-50{background:#fffbeb}.bg-emerald-50{background:#ecfdf5}
@@ -2401,30 +1983,30 @@ body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;col
 .border-slate-100{border-color:#f1f5f9}.border-slate-300{border-color:#cbd5e1}.border-slate-400{border-color:#94a3b8}.border-slate-500{border-color:#64748b}.border-slate-800{border-color:#1e293b}
 .rounded{border-radius:4px}.rounded-md{border-radius:6px}.rounded-lg{border-radius:8px}.rounded-xl{border-radius:12px}.rounded-2xl{border-radius:16px}
 .p-1\.5{padding:6px}.p-2{padding:8px}.p-3{padding:12px}.p-4{padding:16px}
-.px-1{padding-left:4px;padding-right:4px}.px-1\.5{padding-left:6px;padding-right:6px}.px-2{padding-left:8px;padding-right:8px}.px-2\.5{padding-left:10px;padding-right:10px}.px-3{padding-left:12px;padding-right:12px}
+.px-1\.5{padding-left:6px;padding-right:6px}.px-2{padding-left:8px;padding-right:8px}.px-2\.5{padding-left:10px;padding-right:10px}.px-3{padding-left:12px;padding-right:12px}
 .py-0\.5{padding-top:2px;padding-bottom:2px}.py-1{padding-top:4px;padding-bottom:4px}.py-1\.5{padding-top:6px;padding-bottom:6px}.py-2{padding-top:8px;padding-bottom:8px}
 .pt-0\.5{padding-top:2px}.pt-1\.5{padding-top:6px}.pt-2{padding-top:8px}.pt-14{padding-top:56px}.pb-1{padding-bottom:4px}.pb-2\.5{padding-bottom:10px}
 .mb-0\.5{margin-bottom:2px}.mb-1{margin-bottom:4px}.mb-1\.5{margin-bottom:6px}.mt-2{margin-top:8px}.mx-auto{margin-left:auto;margin-right:auto}
-.w-full{width:100%}.w-\[42\%\]{width:42%}.w-14{width:56px}.h-14{height:56px}.w-16{width:64px}.w-20{width:80px}.max-w-\[190mm\]{max-width:190mm}
+.w-full{width:100%}.w-14{width:56px}.h-14{height:56px}.w-20{width:80px}.max-w-\[190mm\]{max-width:190mm}
 .flex{display:flex}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.items-end{align-items:flex-end}.justify-between{justify-content:space-between}
 .shrink-0{flex-shrink:0}.inline-block{display:inline-block}.object-cover{object-fit:cover}
 .grid{display:grid}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
-.gap-1\.5{gap:6px}.gap-2{gap:8px}.gap-3{gap:12px}.gap-6{gap:24px}.gap-x-2\.5{column-gap:10px}.gap-y-0\.5{row-gap:2px}
+.gap-1\.5{gap:6px}.gap-2{gap:8px}.gap-3{gap:12px}.gap-x-2\.5{column-gap:10px}.gap-y-0\.5{row-gap:2px}
 .space-y-0\.5>*+*{margin-top:2px}.space-y-1>*+*{margin-top:4px}.space-y-2>*+*{margin-top:8px}.space-y-3>*+*{margin-top:12px}
-.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-xs{font-size:12px}.text-sm{font-size:14px}.text-base{font-size:16px}.text-lg{font-size:18px}
+.text-\[11px\]{font-size:11px}.text-xs{font-size:12px}.text-sm{font-size:14px}.text-base{font-size:16px}.text-lg{font-size:18px}
 .font-medium{font-weight:500}.font-semibold{font-weight:600}.font-bold{font-weight:700}.uppercase{text-transform:uppercase}.leading-tight{line-height:1.25}
 .text-left{text-align:left}.text-right{text-align:right}.tabular-nums{font-variant-numeric:tabular-nums}.whitespace-nowrap{white-space:nowrap}
 .break-inside-avoid{break-inside:avoid;page-break-inside:avoid}
 table{border-collapse:collapse}
 @media(max-width:640px){.sm\:grid-cols-2{grid-template-columns:1fr}}
 @media(min-width:640px){.sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.sm\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}}
-</style>${a4Style}</head><body class="bg-white p-1.5 sm:p-3"><div id="bill-wrap" class="${wrapClass}">${sheet.innerHTML}</div><script>window.onload=()=>{const el=document.getElementById('bill-wrap');if(el){const pw=el.style.width;el.style.width='740px';const h=el.scrollHeight;el.style.width=pw;if(h>1040){el.style.zoom=String(Math.max(0.35,Math.floor((1040/h)*100)/100));}}setTimeout(()=>window.print(),400);}<\/script></body></html>`;
+</style>${a4Style}</head><body class="bg-white p-3"><div class="${wrapClass}">${sheet.innerHTML}</div><script>window.onload=()=>setTimeout(()=>window.print(),400)<\/script></body></html>`;
               const blob = new Blob([billDoc], { type: 'text/html;charset=utf-8' });
               const a = document.createElement('a');
               a.href = URL.createObjectURL(blob);
               a.download = `${fileTitle}.html`;
               a.click();
-              setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+              URL.revokeObjectURL(a.href);
               showToast(`${fileTitle} — ${t('billDownloadedToast')}`);
             }
           },
@@ -2439,39 +2021,15 @@ table{border-collapse:collapse}
               document.title = `${safeCust}_${modeLabel}_Order_${o.orderNo}`;
               document.body.classList.add('printing-order');
               if (currentMode === 'partner') document.body.classList.add('printing-partner-a4');
-              sheet.style.zoom = '';
-              {
-                const prevPos = sheet.style.position;
-                const prevVis = sheet.style.visibility;
-                const prevDisp = sheet.style.display;
-                const prevW = sheet.style.width;
-                sheet.style.position = 'fixed';
-                sheet.style.visibility = 'hidden';
-                sheet.style.display = 'block';
-                sheet.style.width = '740px';
-                const sh = sheet.scrollHeight;
-                sheet.style.position = prevPos;
-                sheet.style.visibility = prevVis;
-                sheet.style.display = prevDisp;
-                sheet.style.width = prevW;
-                if (sh > 1040) {
-                  sheet.style.zoom = String(Math.max(0.35, Math.floor((1040 / sh) * 100) / 100));
-                }
-              }
-              const cleanupPrint = () => {
-                sheet.style.zoom = '';
-                document.body.classList.remove('printing-order', 'printing-partner-a4');
-                document.title = prevTitle;
-                window.removeEventListener('afterprint', cleanupPrint);
-              };
-              window.addEventListener('afterprint', cleanupPrint);
               try {
                 window.print();
               } catch (e) {
                 showToast(t('printBlockedToast'));
-                cleanupPrint();
               }
-              setTimeout(cleanupPrint, 10000);
+              setTimeout(() => {
+                document.body.classList.remove('printing-order', 'printing-partner-a4');
+                document.title = prevTitle;
+              }, 1200);
             }
           }
         ]
@@ -2550,7 +2108,7 @@ table{border-collapse:collapse}
       const contactProps = getContactProprietorNames();
       const partners = (Array.isArray(o.partners) && o.partners.length > 0)
         ? o.partners
-        : (contactProps.length > 0 ? contactProps : []);
+        : (contactProps.length > 0 ? contactProps : ['પ્રોપરાઇટર']);
       let workers = [];
       if (Array.isArray(o.workers)) {
         workers = o.workers;
@@ -2615,11 +2173,11 @@ table{border-collapse:collapse}
       const workerStats = workers.map(w => {
         const attList = getWorkerAttList(o, w.name);
         const days = attList.reduce((s, x) => s + (Number(x.days) || 0), 0);
-        const rate = w.name === 'સુરેશ' ? (o.sureshRate !== undefined && o.sureshRate !== null && o.sureshRate !== '' ? Number(o.sureshRate) : (w.rate !== undefined && w.rate !== null && w.rate !== '' ? Number(w.rate) : 350)) : (Number(w.rate) || 0);
+        const rate = w.name === 'સુરેશ' ? (Number(o.sureshRate) || Number(w.rate) || 350) : (Number(w.rate) || 0);
         const mode = w.mode || (w.name === 'દિપક' ? 'lumpsum' : 'daily');
         let wage = 0;
         if (mode === 'lumpsum') {
-          wage = w.name === 'દિપક' ? (o.dipakFee !== undefined && o.dipakFee !== null && o.dipakFee !== '' ? Number(o.dipakFee) : (Number(w.lumpsumFee) || 0)) : (Number(w.lumpsumFee) || 0);
+          wage = w.name === 'દિપક' ? (Number(o.dipakFee) || Number(w.lumpsumFee) || 0) : (Number(w.lumpsumFee) || 0);
         } else {
           wage = days * rate;
         }
@@ -2672,10 +2230,11 @@ table{border-collapse:collapse}
       const maheshStat = partnerStats.find(p => p.name === 'મહેશ') || { upad: 0, spent: 0, extra: 0, diff: 0, final: 0 };
       const madhuStat = partnerStats.find(p => p.name === 'માધુસિંહ') || { upad: 0, spent: 0, extra: 0, diff: 0, final: 0 };
 
-      // F3/F4 partners + all workers in attendance sheet appear in Final Settlement
+      // Upad columns: all partners + daily workers
+      const dailyWorkers = workerStats.filter(w => w.mode === 'daily');
       const settlementCols = [
-        ...partnerStats.map((p, idx) => ({ name: p.name, role: idx === 0 ? 'proprietor' : 'partner', share: p.share, upad: p.upad, spentPlusExtra: p.spent + p.extra, final: p.final })),
-        ...workerStats.map(w => ({ name: w.name, role: 'worker', share: w.wage, upad: w.upad, spentPlusExtra: w.spent + w.extra, final: w.final }))
+        ...partnerStats.map(p => ({ name: p.name, role: 'partner', share: p.share, upad: p.upad, spentPlusExtra: p.spent + p.extra, final: p.final })),
+        ...dailyWorkers.map(w => ({ name: w.name, role: 'worker', share: w.wage, upad: w.upad, spentPlusExtra: w.spent + w.extra, final: w.final }))
       ];
 
       return {
@@ -2694,24 +2253,10 @@ table{border-collapse:collapse}
     // ==========================================
     // 4. MODAL SYSTEM (NO NATIVE ALERT/CONFIRM)
     // ==========================================
-    function openModal({ title, bodyHtml, actions, fullScreenMobile = false }) {
+    function openModal({ title, bodyHtml, actions }) {
       const backdrop = document.getElementById('modal-backdrop');
-      const box = document.getElementById('modal-box');
-      const bodyEl = document.getElementById('modal-body');
-      const actContainer = document.getElementById('modal-actions');
-      if (fullScreenMobile) {
-        backdrop.className = 'fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-0 sm:p-4';
-        box.className = 'bg-white rounded-none sm:rounded-2xl shadow-xl w-full h-full sm:h-auto sm:max-h-[94vh] sm:max-w-4xl p-2.5 sm:p-5 flex flex-col gap-2.5 sm:gap-4';
-        bodyEl.className = 'text-sm text-slate-600 flex-1 overflow-y-auto min-h-0 flex flex-col';
-        actContainer.className = 'flex flex-wrap justify-end gap-1.5 sm:gap-2 pt-2 border-t border-slate-200 shrink-0';
-      } else {
-        backdrop.className = 'fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4';
-        box.className = 'bg-white rounded-2xl shadow-xl max-w-2xl w-full p-5 space-y-4';
-        bodyEl.className = 'text-sm text-slate-600 space-y-3';
-        actContainer.className = 'flex justify-end gap-2 pt-2';
-      }
       document.getElementById('modal-title').textContent = title;
-      bodyEl.innerHTML = bodyHtml;
+      document.getElementById('modal-body').innerHTML = bodyHtml;
       const actEl = document.getElementById('modal-actions');
       actEl.innerHTML = '';
       actions.forEach(a => {
@@ -2945,11 +2490,8 @@ table{border-collapse:collapse}
         });
         h.workerStats.forEach(w => {
           const isLumpsum = w.mode === 'lumpsum';
-          const hasAdjustments = w.upad > 0 || w.spent > 0 || w.extra !== 0;
-          const lbl = (isLumpsum && !hasAdjustments) ? t('totalAmtLbl') : t('netPayableLbl');
-          const cur = personTotals.get(w.name) || { name: w.name, label: lbl, amount: 0, isLumpsum: isLumpsum && !hasAdjustments };
-          if (hasAdjustments) { cur.label = t('netPayableLbl'); cur.isLumpsum = false; }
-          cur.amount += w.final;
+          const cur = personTotals.get(w.name) || { name: w.name, label: isLumpsum ? t('totalAmtLbl') : t('netPayableLbl'), amount: 0, isLumpsum };
+          cur.amount += isLumpsum ? w.wage : w.final;
           personTotals.set(w.name, cur);
         });
         if (h.clientDue > 0) {
@@ -3128,7 +2670,7 @@ table{border-collapse:collapse}
               <option value="daily" ${w.mode === 'daily' ? 'selected' : ''}>${t('dailyRateOpt')}</option>
               <option value="lumpsum" ${w.mode === 'lumpsum' ? 'selected' : ''}>${t('lumpsumOpt')}</option>
             </select>
-            <input data-edit-worker-rate="${idx}" type="number" value="${w.mode === 'lumpsum' ? (w.lumpsumFee || 0) : w.rate}" placeholder="${w.mode === 'lumpsum' ? 'ઉચ્ચક ₹' : t('ratePh')}" class="w-20 px-2 py-1.5 border border-slate-300 rounded-lg text-xs text-right tabular-nums" />
+            <input data-edit-worker-rate="${idx}" type="number" value="${w.rate}" placeholder="${t('ratePh')}" class="w-20 px-2 py-1.5 border border-slate-300 rounded-lg text-xs text-right tabular-nums ${w.mode === 'lumpsum' ? 'opacity-50' : ''}" />
             <button type="button" data-del-edit-worker="${idx}" class="px-2 py-1 text-rose-500 hover:bg-rose-50 rounded-lg text-xs font-bold">✕</button>
           </div>
         `).join('');
@@ -3152,12 +2694,7 @@ table{border-collapse:collapse}
           });
         });
         wList.querySelectorAll('[data-edit-worker-rate]').forEach(inp => {
-          inp.addEventListener('input', () => {
-            const wItem = draftWorkers[Number(inp.dataset.editWorkerRate)];
-            const val = Number(inp.value) || 0;
-            if (wItem.mode === 'lumpsum') wItem.lumpsumFee = val;
-            else wItem.rate = val;
-          });
+          inp.addEventListener('input', () => { draftWorkers[Number(inp.dataset.editWorkerRate)].rate = Number(inp.value) || 0; });
         });
         wList.querySelectorAll('[data-del-edit-worker]').forEach(btn => {
           btn.addEventListener('click', () => {
@@ -3195,7 +2732,7 @@ table{border-collapse:collapse}
             className: 'px-4 py-2 text-sm font-semibold bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl',
             onClick: () => {
               const cleanP = draftPartners.map(p => p.trim()).filter(Boolean);
-              if (cleanP.length === 0) { const cp = getContactProprietorNames(); if (cp.length) cleanP.push(...cp); }
+              if (cleanP.length === 0) { const cp = getContactProprietorNames(); cleanP.push(...(cp.length ? cp : ['Proprietor'])); }
               const cleanW = draftWorkers.map(w => ({
                 name: (w.name || '').trim(),
                 mode: w.mode || 'daily',
@@ -3208,8 +2745,6 @@ table{border-collapse:collapse}
               o.workers = cleanW;
               const sW = cleanW.find(w => w.name === 'સુરેશ');
               if (sW) o.sureshRate = sW.rate;
-              const dW = cleanW.find(w => w.name === 'દિપક');
-              if (dW) o.dipakFee = dW.lumpsumFee;
               saveOrders();
               closeModal();
               renderOrdersView();
@@ -3230,38 +2765,7 @@ table{border-collapse:collapse}
       });
     }
 
-    function captureDetailFocus() {
-      const panel = document.getElementById('order-detail-panel');
-      const active = document.activeElement;
-      if (!panel || !active || !panel.contains(active)) return null;
-      if (active.id) return { type: 'id', val: active.id };
-      const attrs = ['data-adv-date','data-adv-amt','data-lab-desc','data-lab-amt','data-upad-date','data-exp-who','data-exp-amt','data-exp-desc','data-lumpsum-worker','data-att-date'];
-      for (const a of attrs) {
-        if (active.hasAttribute(a)) return { type: 'attr', attr: a, val: active.getAttribute(a) };
-      }
-      if (active.hasAttribute('data-upad-person') && active.hasAttribute('data-upad-row')) {
-        return { type: 'upad', person: active.getAttribute('data-upad-person'), row: active.getAttribute('data-upad-row') };
-      }
-      if (active.hasAttribute('data-att-worker') && active.hasAttribute('data-att-row')) {
-        return { type: 'att', worker: active.getAttribute('data-att-worker'), row: active.getAttribute('data-att-row') };
-      }
-      return null;
-    }
-    function restoreDetailFocus(info) {
-      if (!info) return;
-      const panel = document.getElementById('order-detail-panel');
-      if (!panel) return;
-      let el = null;
-      if (info.type === 'id') el = document.getElementById(info.val);
-      else if (info.type === 'attr') el = panel.querySelector(`[${info.attr}="${CSS.escape(info.val)}"]`);
-      else if (info.type === 'upad') el = panel.querySelector(`[data-upad-person="${CSS.escape(info.person)}"][data-upad-row="${CSS.escape(info.row)}"]`);
-      else if (info.type === 'att') el = panel.querySelector(`[data-att-worker="${CSS.escape(info.worker)}"][data-att-row="${CSS.escape(info.row)}"]`);
-      if (el && typeof el.focus === 'function') {
-        try { el.focus({ preventScroll: true }); } catch (e) { el.focus(); }
-      }
-    }
     function renderOrderDetail() {
-      const _focusInfo = captureDetailFocus();
       const panel = document.getElementById('order-detail-panel');
       const o = state.orders.find(x => x.id === state.selectedOrderId);
       if (!o) {
@@ -3664,7 +3168,6 @@ table{border-collapse:collapse}
 
       renderMergedAttendanceRows(o);
       bindOrderDetailEvents(o);
-      restoreDetailFocus(_focusInfo);
     }
 
     function getMergedAttendance(o) {
@@ -3760,8 +3263,8 @@ table{border-collapse:collapse}
           workers.forEach(w => {
             if (w.name === 'સુરેશ') o.sureshAtt = byW[w.name];
             else if (w.name === 'દિપક') o.dipakAtt = byW[w.name];
-            if (Array.isArray(o.workers)) {
-              const wObj = o.workers.find(wk => wk.name === w.name);
+            else {
+              const wObj = (o.workers || []).find(wk => wk.name === w.name);
               if (wObj) wObj.att = byW[w.name];
             }
           });
@@ -3946,30 +3449,25 @@ table{border-collapse:collapse}
         });
       });
 
-      // Add row buttons (sync DOM first, keep amount and attendance fields blank by default)
+      // Add row buttons (keep amount and attendance fields blank by default)
       document.getElementById('btn-add-advance').addEventListener('click', () => {
-        syncAllOrderInputsFromDOM();
         o.advances.push({ date: todayDDMMYYYY(), amount: '' });
         saveOrders(); renderOrdersView();
       });
       document.getElementById('btn-add-labor').addEventListener('click', () => {
-        syncAllOrderInputsFromDOM();
         o.laborItems.push({ desc: '', amount: '' });
         saveOrders(); renderOrdersView();
       });
       document.getElementById('btn-add-upad').addEventListener('click', () => {
-        syncAllOrderInputsFromDOM();
         o.upads.push({ date: todayDDMMYYYY(), madhusinh: '', mahesh: '', suresh: '', byPerson: {} });
         saveOrders(); renderOrdersView();
       });
       document.getElementById('btn-add-expense').addEventListener('click', () => {
-        syncAllOrderInputsFromDOM();
         const { partners } = getOrderTeam(o);
         o.expenses.push({ who: partners[0] || '', amount: '', desc: '' });
         saveOrders(); renderOrdersView();
       });
       document.getElementById('btn-add-att').addEventListener('click', () => {
-        syncAllOrderInputsFromDOM();
         const { workers } = getOrderTeam(o);
         if (workers.length === 0) {
           showToast(t('addWorkerFirstToast'));
@@ -3977,20 +3475,17 @@ table{border-collapse:collapse}
         }
         const firstW = workers[0].name;
         const dt = todayDDMMYYYY();
-        const nextRowIdx = getMergedAttendance(o).length;
-        const newEntry = { date: dt, days: '', rowIdx: nextRowIdx };
         if (firstW === 'સુરેશ') {
           if (!Array.isArray(o.sureshAtt)) o.sureshAtt = [];
-          o.sureshAtt.push({ ...newEntry });
+          o.sureshAtt.push({ date: dt, days: '' });
         } else if (firstW === 'દિપક') {
           if (!Array.isArray(o.dipakAtt)) o.dipakAtt = [];
-          o.dipakAtt.push({ ...newEntry });
-        }
-        if (Array.isArray(o.workers)) {
+          o.dipakAtt.push({ date: dt, days: '' });
+        } else if (Array.isArray(o.workers)) {
           const wObj = o.workers.find(w => w.name === firstW);
           if (wObj) {
             if (!Array.isArray(wObj.att)) wObj.att = [];
-            wObj.att.push({ ...newEntry });
+            wObj.att.push({ date: dt, days: '' });
           }
         }
         saveOrders(); renderOrdersView();
@@ -4091,7 +3586,7 @@ table{border-collapse:collapse}
           cur.days += w.days;
           cur.wage += w.wage;
           cur.upad += w.upad;
-          cur.final += w.final;
+          cur.final += (w.mode === 'lumpsum' ? (w.wage - w.upad) : w.final);
           cur.orderCount += 1;
           workerSummaryMap.set(w.name, cur);
 
@@ -4105,7 +3600,7 @@ table{border-collapse:collapse}
             days: w.days,
             wage: w.wage,
             upad: w.upad,
-            final: w.final
+            final: w.mode === 'lumpsum' ? (w.wage - w.upad) : w.final
           });
         });
       });
@@ -4268,7 +3763,7 @@ table{border-collapse:collapse}
       a.href = url;
       a.download = 'Karigar_Hisab_Summary.csv';
       a.click();
-      setTimeout(() => URL.revokeObjectURL(url), 1500);
+      URL.revokeObjectURL(url);
       showToast(t('csvDownloadedToast'));
     }
 
@@ -4280,7 +3775,7 @@ table{border-collapse:collapse}
       a.href = url;
       a.download = 'Karigar_Hisab_Backup.json';
       a.click();
-      setTimeout(() => URL.revokeObjectURL(url), 1500);
+      URL.revokeObjectURL(url);
       showToast(t('jsonDownloadedToast'));
     }
 
@@ -4371,10 +3866,7 @@ table{border-collapse:collapse}
       applyStaticTranslations();
       renderContactDisplay();
       const gasInput = document.getElementById('input-gas-url');
-      const currentGasUrl = getGasUrl();
-      if (gasInput) gasInput.value = currentGasUrl;
-      const tstInit = document.getElementById('btn-test-gas-url');
-      if (tstInit && currentGasUrl) tstInit.href = currentGasUrl + (currentGasUrl.includes('?') ? '&' : '?') + 'action=loadSheet';
+      if (gasInput) gasInput.value = getGasUrl();
       updateDriveSyncUI();
 
       document.getElementById('btn-header-drive-status').addEventListener('click', () => {
@@ -4394,26 +3886,28 @@ table{border-collapse:collapse}
           syncToGoogleDrive(true);
         }
       });
-      const chkAutoTwoWay = document.getElementById('chk-auto-twoway');
-      if (chkAutoTwoWay) {
-        chkAutoTwoWay.checked = isAutoTwoWayEnabled();
-        chkAutoTwoWay.addEventListener('change', () => {
-          try { localStorage.setItem(AUTO_TWOWAY_KEY, chkAutoTwoWay.checked ? 'true' : 'false'); } catch (e) {}
-          showToast(chkAutoTwoWay.checked ? 'ઓટો 2-Way સિંક ચાલુ થયું ✓' : 'ઓટો 2-Way સિંક બંધ થયું');
-        });
-      }
-      document.getElementById('btn-drive-sync-now').addEventListener('click', () => syncToGoogleDrive(true, false));
+      document.getElementById('btn-drive-sync-now').addEventListener('click', () => {
+        const isOnlySample = state.orders.length === 0 || (state.orders.length <= INITIAL_ORDERS.length && state.orders.every(o => String(o.id || '').startsWith('ord_')));
+        if (isOnlySample) {
+          openModal({
+            title: '⚠️ સાવચેતી: Drive બેકઅપ અપડેટ',
+            bodyHtml: '<p class="text-sm text-slate-700">અત્યારે એપમાં ફક્ત ખાલી/સેમ્પલ ડેટા જ છે. જો તમે અત્યારે Drive માં સેવ કરશો, તો Drive પરનો જૂનો બેકઅપ બદલાઈ શકે છે.<br><br>શું તમે પહેલા <b>"Drive માંથી ડેટા પાછો લાવો"</b> અથવા <b>"Sheet માંથી લાવો"</b> કરવા માંગો છો?</p>',
+            actions: [
+              { label: 'ના, રદ કરો', className: 'px-3 py-2 text-xs font-medium text-slate-600 hover:bg-slate-100 rounded-xl', onClick: closeModal },
+              { label: 'હા, છતાં સેવ કરો', className: 'px-4 py-2 text-xs font-semibold bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl', onClick: () => { closeModal(); syncToGoogleDrive(true); } }
+            ]
+          });
+          return;
+        }
+        syncToGoogleDrive(true);
+      });
       document.getElementById('btn-drive-restore').addEventListener('click', () => restoreFromGoogleDrive(false));
       document.getElementById('btn-sheet-sync').addEventListener('click', () => syncFromGoogleSheet(false));
-      const btnSheetPush = document.getElementById('btn-sheet-push');
-      if (btnSheetPush) btnSheetPush.addEventListener('click', () => syncToGoogleSheet(false));
-      const btnTwoWay = document.getElementById('btn-twoway-sync');
-      if (btnTwoWay) btnTwoWay.addEventListener('click', () => twoWaySync(false));
       const menuSheetBtn = document.getElementById('btn-menu-sheet-sync');
       if (menuSheetBtn) {
         menuSheetBtn.addEventListener('click', () => {
           if (menuPanel) menuPanel.classList.add('hidden');
-          twoWaySync(false);
+          syncFromGoogleSheet();
         });
       }
       document.getElementById('btn-show-gas-guide').addEventListener('click', openGasGuideModal);
@@ -4520,10 +4014,7 @@ table{border-collapse:collapse}
       });
 
       renderDashboard();
-      const hasLocalOrders = (() => {
-        try { return !!localStorage.getItem(STORAGE_KEY); } catch (e) { return false; }
-      })();
-      if (getGasUrl() && !hasLocalOrders) {
+      if (getGasUrl()) {
         setTimeout(() => syncFromGoogleSheet(true), 400);
       }
     });
