@@ -420,6 +420,13 @@
           <button id="btn-show-gas-guide" type="button" class="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-amber-300 font-semibold text-xs rounded-xl transition" data-i18n="driveGuideBtn">
             Apps Script કોડ અને સેટઅપ રીત જુઓ
           </button>
+          <button id="btn-export-partner-json-top" type="button" class="px-3.5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs rounded-xl shadow-sm transition">
+            🤝 ભાગીદાર JSON મોકલો
+          </button>
+          <label class="px-3.5 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 font-bold text-xs rounded-xl shadow-sm transition cursor-pointer border border-emerald-300 inline-flex items-center">
+            <span>📂 ભાગીદાર JSON ખોલો</span>
+            <input id="input-import-partner-json-top" type="file" accept=".json" class="hidden" />
+          </label>
           <button id="btn-share-partner-wa" type="button" class="px-3.5 py-2 bg-green-600 hover:bg-green-700 text-white font-bold text-xs rounded-xl shadow-sm transition">
             💬 WhatsApp ભાગીદાર લિંક મોકલો
           </button>
@@ -449,6 +456,13 @@
             <label class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-sm rounded-xl transition cursor-pointer border border-slate-300">
               <span data-i18n="uploadBackupBtn">બેકઅપ અપલોડ કરો</span>
               <input id="input-import-json" type="file" accept=".json" class="hidden" />
+            </label>
+            <button id="btn-export-partner-json" type="button" class="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-sm rounded-xl transition">
+              🤝 ભાગીદાર JSON ફાઈલ ડાઉનલોડ કરો
+            </button>
+            <label class="px-4 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 font-semibold text-sm rounded-xl transition cursor-pointer border border-emerald-300">
+              <span>📂 ભાગીદાર JSON ફાઈલ ખોલો (Read-Only)</span>
+              <input id="input-import-partner-json" type="file" accept=".json" class="hidden" />
             </label>
           </div>
         </div>
@@ -977,7 +991,12 @@
     }
 
     let _driveSyncTimer = null;
+    function isPartnerReadOnlyMode() {
+      try { return localStorage.getItem('msw_partner_readonly_v1') === '1'; } catch (e) { return false; }
+    }
+
     function scheduleDriveSync() {
+      if (isPartnerReadOnlyMode()) return;
       const url = getGasUrl();
       if (!url) return;
       updateDriveSyncUI('syncing', true);
@@ -1127,6 +1146,10 @@
     }
 
     async function syncToGoogleSheet(silent = false) {
+      if (isPartnerReadOnlyMode()) {
+        if (!silent) showToast('ભાગીદાર વ્યૂ (Read-Only): મુખ્ય શીટમાં ફેરફાર બંધ છે.');
+        return;
+      }
       const url = getGasUrl();
       if (!url) { if (!silent) showToast(t('driveNeedUrl')); return; }
       if (!state.orders || state.orders.length === 0) {
@@ -1160,7 +1183,10 @@
           const nowStr = `${todayDDMMYYYY()} ${new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}`;
           try { localStorage.setItem(GAS_LAST_SYNC_KEY, nowStr); } catch (e) {}
           updateDriveSyncUI(t('driveConnectedBadge'), true);
-          renderDashboard(); renderOrdersView(); renderAttendanceView();
+          if (!loadedFromPartnerHash && isPartnerReadOnlyMode()) {
+        applyPartnerReadOnlyLock();
+      }
+      renderDashboard(); renderOrdersView(); renderAttendanceView();
           if (!silent) showToast(`Google Sheet (M S W__2027) માં ${resJson.updatedCount || state.orders.length} ઓર્ડર અપડેટ થયા! ✓`);
         } else {
           updateDriveSyncUI(t('driveErr'), false);
@@ -4334,6 +4360,62 @@ table{border-collapse:collapse}
       showToast(t('jsonDownloadedToast'));
     }
 
+    function exportPartnerJSON() {
+      const backupObj = {
+        orders: state.orders,
+        contact: state.contact,
+        partnerReadOnly: true,
+        exportedAt: new Date().toISOString()
+      };
+      const blob = new Blob([JSON.stringify(backupObj, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Maa_Shakti_Partner_Hisab.json';
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1500);
+      showToast('ભાગીદાર JSON ફાઈલ (Maa_Shakti_Partner_Hisab.json) ડાઉનલોડ થઈ! હવે WhatsApp પર મોકલો.');
+    }
+
+    function importJsonBackupFile(file, forcePartnerReadOnly = false) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        try {
+          const data = JSON.parse(ev.target.result);
+          const ordArr = Array.isArray(data) ? data : (data && Array.isArray(data.orders) ? data.orders : null);
+          if (!ordArr) throw new Error('Invalid');
+          const isPartnerFile = forcePartnerReadOnly || !!(data && !Array.isArray(data) && data.partnerReadOnly === true);
+          try {
+            if (isPartnerFile) {
+              localStorage.setItem('msw_partner_readonly_v1', '1');
+            } else {
+              localStorage.removeItem('msw_partner_readonly_v1');
+            }
+          } catch (e) {}
+
+          state.orders = normalizeOrdersDates(ordArr);
+          if (data && !Array.isArray(data) && data.contact) {
+            state.contact = normalizeContact(data.contact);
+            saveContact();
+            renderContactDisplay();
+          }
+          state.selectedOrderId = state.orders[0]?.id || null;
+          saveOrders();
+          if (isPartnerFile) {
+            applyPartnerReadOnlyLock();
+          }
+          switchTab('dashboard');
+          showToast(isPartnerFile
+            ? 'ભાગીદાર JSON ફાઈલ લોડ થઈ ગઈ (ફક્ત જોવા પૂરતું — Read-Only)!'
+            : t('backupRestoredToast'));
+        } catch {
+          showToast(t('invalidJsonToast'));
+        }
+      };
+      reader.readAsText(file);
+    }
+
     // ==========================================
     // 9. INIT & GLOBAL LISTENERS
     // ==========================================
@@ -4504,29 +4586,22 @@ table{border-collapse:collapse}
       document.getElementById('btn-print-page').addEventListener('click', () => window.print());
 
       document.getElementById('input-import-json').addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-          try {
-            const data = JSON.parse(ev.target.result);
-            const ordArr = Array.isArray(data) ? data : (data && Array.isArray(data.orders) ? data.orders : null);
-            if (!ordArr) throw new Error('Invalid');
-            state.orders = normalizeOrdersDates(ordArr);
-            if (data && !Array.isArray(data) && data.contact) {
-              state.contact = normalizeContact(data.contact);
-              saveContact();
-              renderContactDisplay();
-            }
-            state.selectedOrderId = state.orders[0]?.id || null;
-            saveOrders();
-            switchTab('dashboard');
-            showToast(t('backupRestoredToast'));
-          } catch {
-            showToast(t('invalidJsonToast'));
-          }
-        };
-        reader.readAsText(file);
+        importJsonBackupFile(e.target.files[0], false);
+        e.target.value = '';
+      });
+      const btnExpPartner1 = document.getElementById('btn-export-partner-json');
+      if (btnExpPartner1) btnExpPartner1.addEventListener('click', exportPartnerJSON);
+      const btnExpPartner2 = document.getElementById('btn-export-partner-json-top');
+      if (btnExpPartner2) btnExpPartner2.addEventListener('click', exportPartnerJSON);
+
+      const inpPartner1 = document.getElementById('input-import-partner-json');
+      if (inpPartner1) inpPartner1.addEventListener('change', (e) => {
+        importJsonBackupFile(e.target.files[0], true);
+        e.target.value = '';
+      });
+      const inpPartner2 = document.getElementById('input-import-partner-json-top');
+      if (inpPartner2) inpPartner2.addEventListener('change', (e) => {
+        importJsonBackupFile(e.target.files[0], true);
         e.target.value = '';
       });
 
@@ -4568,6 +4643,7 @@ table{border-collapse:collapse}
               localStorage.setItem(STORAGE_KEY, JSON.stringify(state.orders));
               localStorage.setItem(CONTACT_STORAGE_KEY, JSON.stringify(state.contact));
             } catch (e) {}
+            try { localStorage.setItem('msw_partner_readonly_v1', '1'); } catch (e) {}
             renderContactDisplay();
             applyPartnerReadOnlyLock();
             loadedFromPartnerHash = true;
